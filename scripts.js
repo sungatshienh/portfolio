@@ -9,27 +9,27 @@ document.querySelectorAll('.button').forEach(button => {
 });
 
 function toggleMobileMenu() {
-    event.preventDefault();
-    document.getElementById("menu").classList.toggle("active");
-    const menuToggle = document.querySelector('.custom-bars').classList.toggle("active");;
+    const menu = document.querySelector("nav ul");
+    const bars = document.querySelector(".custom-bars");
+    const header = document.querySelector("header");
+    
+    menu.classList.toggle("active");
+    bars.classList.toggle("active");
+
+    header.classList.toggle("menu-active");
 }
 
-document.addEventListener('click', function (event) {
-    const menu = document.getElementById('menu');
-    const toggleButton = document.querySelector('.mobile-toggle');
+function closeMenuOnOutsideClick(event) {
+    const menu = document.querySelector("nav ul");
+    const bars = document.querySelector(".custom-bars");
+    const header = document.querySelector("header");
     
-    // Check if the clicked element is outside the menu or the toggle button
-    if (!menu.contains(event.target) && !toggleButton.contains(event.target)) {
+    if (!menu.contains(event.target) && !bars.contains(event.target) && !header.contains(event.target)) {
         menu.classList.remove("active");
-    }
-    if (
-        !menuToggle.contains(event.target) && // Click is outside the toggle button
-        !navMenu.contains(event.target) // Click is outside the menu
-    )
-    {
-        menuToggle.classList.remove("active");
-        navMenu.classList.remove("active");
+        bars.classList.remove("active");
         
+        header.classList.remove("menu-active");
     }
-});
+}
 
+document.addEventListener("click", closeMenuOnOutsideClick);
