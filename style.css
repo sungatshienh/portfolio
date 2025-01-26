@@ -30,10 +30,10 @@ body {
     overflow-x: hidden;
     overscroll-behavior-y: contain;
     display: flex;
-
-    
     align-items: center;
     background-color: white;
+    flex-direction: column;
+    height: 100%;
 }
 
 a {
@@ -169,8 +169,8 @@ header {
         .nav-button {
             display: none;
             text-align: center;
-            width: 100%;
-            margin-top: -20px;
+            width: 90%;
+            margin-top: -15px;
         }
 
         .nav-button:hover {
@@ -217,6 +217,7 @@ header {
                 display: block;
                 text-align: center;
                 margin: -5px;
+                margin-bottom: 2px;
             }
 
             ul.active {
@@ -225,7 +226,7 @@ header {
                 width: 100%;
                 background-color: #1c1c1c;
                 position: absolute;
-                top: 55px;
+                top: 54px;
                 left: 0;
                 z-index: 999;
                 border-bottom-left-radius: 20px;
@@ -281,17 +282,25 @@ html {
     overscroll-behavior: none;
 }
 
+main {
+    margin-left: 5%;
+    margin-right: 5%;
+    max-width: 90%;
+    padding: 10px;
+}
+
 section {
-    margin-bottom: 800px;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin-bottom: 100px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 10px;
 }
 
 @media (max-width: 800px) {
     section {
-        margin-left: 5%;
-        margin-right: 5%;
-        font-size: 30px;
+        margin-left: 2%;
+        margin-right: 2%;
+        font-size: 5vw;
     }
 }
 
@@ -316,4 +325,40 @@ section {
 
 .github-logo:hover {
     transform: scale(1.2);
+}
+
+#info {
+    text-align: left;
+}
+
+/*#info h2 {
+    font-size: 2rem;
+}*/
+
+.photo-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.about-photo {
+    margin: 2%;
+    margin-top: 5%;
+    max-width: 45%;
+    object-fit: cover;
+    border-radius: 30px;
+    transition: transform 0.3s ease;
+}
+
+.about-photo:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+    width: 90%;
+    height: 40%;
+    text-align: left;
+    margin-top: auto;
 }

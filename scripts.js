@@ -9,6 +9,8 @@ document.querySelectorAll('.button').forEach(button => {
 });
 
 function toggleMobileMenu() {
+    event.preventDefault();
+    
     const menu = document.querySelector("nav ul");
     const bars = document.querySelector(".custom-bars");
     const header = document.querySelector("header");
