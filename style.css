@@ -346,12 +346,15 @@ section p {
 }
 
 .about-photo {
-    margin: 1%;
-    margin-top: 1%;
-    max-width: 45%;
+    margin-top: 20px;
+    max-width: 500px;
     object-fit: cover;
     border-radius: 20px;
     transition: transform 0.3s ease;
+
+    @media (max-width: 800px) {
+        max-width: 80%;
+    }
 }
 
 .about-photo:hover {
@@ -361,7 +364,7 @@ section p {
 
 footer {
     width: 90%;
-    height: 45%;
+    height: 50%;
     text-align: left;
     margin-top: auto;
 }
