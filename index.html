@@ -11,12 +11,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/merkur" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <script src="./scripts.js"></script>
-    <link rel="icon" type="image/png" href="./images/favicon.png?=1">
+    <link rel="icon" type="image/png" href="./images/favicon.png">
 </head>
 <body>
-    <header>
+    <header id="header" class="expanded">
         <a href="#info" class="logo-holder">
             <div class="logo-text">Sungat Shienh</div>
         </a>
@@ -41,7 +42,7 @@
             <h2>About Me</h2>
             <p>I'm Sungat, a student at the University of Michigan studying Computer Science.</p>
             <div class="photos">
-                <img src="images/grad.png" alt="Grad" class="about-photo">
+                <!-- <img src="images/grad.png" alt="Grad" class="about-photo"> -->
                 <!-- <img src="images/alamo24.png" alt="Alamo24" class="about-photo">
                 <img src="images/alamo23.jpeg" alt="Alamo23" class="about-photo">
                 <img src="images/cancun.jpeg" alt="Cancun" class="about-photo"> -->
@@ -69,12 +70,11 @@
         </section>-->
     </main>
     <footer>
-        <section id="contact" style="padding-top: 100px;">
-            <h2>Contact</h2>
+        <section id="contact" class="contact">
             <p>sungatshienh24@gmail.com</p>
             <p>sungat@umich.edu</p>
             <p>248-907-0017</p>
-            <div class="contact">
+            <div class="contact-icons">
                 <a href="https://www.linkedin.com/in/sungat" target="_blank" rel="noopener noreferrer">
                     <img src="./images/linkedin.png" alt="LinkedIn Logo" class="linkedin-logo">
                 </a>
@@ -86,3 +86,40 @@
     </footer>
 </body>
 </html>
+
+
+
+<!--<div class="wrapper">
+    <div class="liquidGlass-wrapper menu">
+        <div class="liquidGlass-effect">×</div>
+        <div class="liquidGlass-tint">×</div>
+        <div class="liquidGlass-shine">×</div>
+    </div>
+
+    <a href="#">
+        <div class="liquidGlass-wrapper dock">
+            <div class="liquidGlass-effect">×</div>
+            <div class="liquidGlass-tint">×</div>
+            <div class="liquidGlass-shine">×</div>
+            <div class="liquidGlass-text">
+                <div class="dock"></div>
+            </div>
+        </div>
+    </a>
+    </div>
+    <svg style="display: none">
+        <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.01 0.01" numOctaves="1" />
+            <feComponentTransfer in="turbulence" result="mapped">
+                <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5" />
+                <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
+                <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
+            </feComponentTransfer>
+            <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
+            <feSpecularLighting in="softMap" surfaceScale="5" specularConstant="1" specularExponent="100" lighting-color="white" result="specLight" >
+                <fePointLight x="-200" y="-200" z="300" />
+            </feSpecularLighting>
+            <feComposite in="specLight" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="litImage" />
+            <feDisplacementMap in="SourceGraphic" in2="softMap" scale="150" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+    </svg> -->

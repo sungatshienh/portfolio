@@ -17,7 +17,6 @@ function toggleMobileMenu() {
     
     menu.classList.toggle("active");
     bars.classList.toggle("active");
-
     header.classList.toggle("menu-active");
 }
 
@@ -29,9 +28,19 @@ function closeMenuOnOutsideClick(event) {
     if (!menu.contains(event.target) && !bars.contains(event.target) && !header.contains(event.target)) {
         menu.classList.remove("active");
         bars.classList.remove("active");
-        
         header.classList.remove("menu-active");
     }
 }
 
 document.addEventListener("click", closeMenuOnOutsideClick);
+
+window.addEventListener('scroll', function () {
+    const header = document.getElementById('header');
+    if (window.scrollY > 10) {
+        header.classList.add('shrunk');
+        header.classList.remove('expanded');
+    } else {
+        header.classList.add('expanded');
+        header.classList.remove('shrunk');
+    }
+});

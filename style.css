@@ -23,6 +23,7 @@ body {
     font-family: "DM Sans", serif;
     font-optical-sizing: auto;
     font-weight: 400;
+    color: #f1f1f1;
     font-style: normal;
     font-size: 40px;
     margin: 0;
@@ -30,7 +31,7 @@ body {
     overscroll-behavior-y: contain;
     display: flex;
     align-items: center;
-    background-color: white;
+    background-color: black;
     flex-direction: column;
     height: 100%;
 }
@@ -48,14 +49,15 @@ header {
     left: 50%;
     transform: translateX(-50%);
     height: 55px;
-    width: 550px;
-    padding: 0px 30px;
-    background: #1c1c1c;
-    opacity: 0.9;
-    border: 10px;
+    width: fit-content;
+    padding: 10px 30px;
+    background: rgba(33, 33, 33, 0.4);
+    backdrop-filter: blur(25px);
+    opacity: 1;
+    border: 0.01px solid;
     border-color: black;
-    border-radius: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 40px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 10px 30px rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -69,15 +71,16 @@ header {
     .logo-holder {
         display: flex;
         align-items: center;
-        margin-top: 5px;
+        margin-top: 0px;
         flex-grow: 1;
         .logo-text {
-            font-family: 'Merkur', sans-serif;
+            font-family: "DM Sans", sans-serif;
+            font-weight: 500;
             text-align: left;
             line-height: 0px;
             margin-left: 0;
-            color: lightgray;
-            font-size: x-large;
+            color: #bababa;
+            font-size: large;
             transition: transform 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
         }
         .logo-text:hover {
@@ -93,8 +96,8 @@ header {
     .nav-button {
         text-decoration: none;
         font-size: 15px;
-        font-weight: 600;
-        color: lightgray;
+        font-weight: 300;
+        color: #bababa;
         padding: 10px 20px;
         border-radius: 30px;
         background: none;
@@ -272,6 +275,24 @@ header {
     }
 }
 
+#header.expanded {
+  width: 90%;
+  max-width: 800px;
+  background: #141414;
+}
+
+#header.shrunk {
+  width: 80%;
+  max-width: 500px;
+}
+
+#header {
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1), 
+              max-width 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              padding 0.6s ease;
+}
+
+
 html {
     scroll-behavior: smooth;
     margin: 0;
@@ -367,4 +388,44 @@ footer {
     height: 50%;
     text-align: left;
     margin-top: auto;
+}
+
+.contact {
+    color: #bababa;
+    padding: 60px 60px 40px;
+    margin: 80px auto;
+    font-family: 'DM Sans', sans-serif;
+    background-color: rgba(33, 33, 33, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 40px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 
+                0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.contact-title {
+  font-size: 24px;
+  color: #bababa;
+  margin-bottom: 20px;
+}
+
+.contact p {
+  font-size: 20px;
+  color: #bababa;
+  margin: 10px 0 20px;
+}
+
+.contact-icons {
+  display: flex;
+  gap: 1px;
+  justify-content: flex-start;
+}
+
+.contact-icons a {
+  color: #aaa;
+  transition: color 0.3s ease;
+}
+
+.contact-icons a:hover {
+  color: white;
 }
