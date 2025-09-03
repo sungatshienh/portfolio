@@ -23,7 +23,7 @@ body {
     font-family: "DM Sans", serif;
     font-optical-sizing: auto;
     font-weight: 400;
-    color: #f1f1f1;
+    color: #bababa;
     font-style: normal;
     font-size: 40px;
     margin: 0;
@@ -57,7 +57,7 @@ header {
     border: 0.01px solid;
     border-color: black;
     border-radius: 40px;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1), 0 10px 30px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2), 0 10px 30px rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -75,7 +75,7 @@ header {
         flex-grow: 1;
         .logo-text {
             font-family: "DM Sans", sans-serif;
-            font-weight: 500;
+            font-weight: 600;
             text-align: left;
             line-height: 0px;
             margin-left: 0;
@@ -96,7 +96,7 @@ header {
     .nav-button {
         text-decoration: none;
         font-size: 15px;
-        font-weight: 300;
+        font-weight: 400;
         color: #bababa;
         padding: 10px 20px;
         border-radius: 30px;
@@ -428,4 +428,51 @@ footer {
 
 .contact-icons a:hover {
   color: white;
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 20px;
+  margin-right: 10%;
+  max-width: 700px;
+}
+
+.project-card {
+  background-color: rgba(33, 33, 33, 0.4);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 20px 30px;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.1),
+              0 0 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2),
+              0 0 28px rgba(0, 0, 0, 0.5);
+}
+
+.project-card h3 {
+  margin-bottom: 10px;
+  color: #bababa;
+}
+
+.project-card p {
+  font-size: 16px;
+  color: #ccc;
+  margin-bottom: 15px;
+}
+
+.project-card a {
+  color: var(--purple-100);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.project-card a:hover {
+  text-shadow: 0 0 8px rgba(106, 90, 205, 0.4);
 }
