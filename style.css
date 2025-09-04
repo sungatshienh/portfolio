@@ -478,3 +478,22 @@ footer {
     display: block;
     margin-bottom: 10px;
 }
+
+@media (max-width: 800px) {
+    body {
+        font-size: 20px;
+    }
+
+    header {
+        .logo-holder {
+            font-size: 10px;
+                .logo-text {
+                    font-size: 20px;
+                }
+        }
+    }
+        .nav-button {
+            font-size: 12px;
+        }
+    }
+}
