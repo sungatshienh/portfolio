@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
     <script src="./scripts.js"></script>
-    <link rel="icon" type="image/png" href="./images/favicon.png">
+    <!-- <link rel="icon" type="image/png" href="./images/favicon.png"> -->
 </head>
 <body>
     <header id="header" class="expanded">
@@ -44,31 +44,64 @@
         <section id="info" style="padding-top: 100px;">
             <h2>About Me</h2>
             <p>I'm Sungat, a student at the University of Michigan studying Computer Science.</p>
-            <div class="photos">
-                <!-- <img src="images/grad.png" alt="Grad" class="about-photo"> -->
-                <!-- <img src="images/alamo24.png" alt="Alamo24" class="about-photo">
-                <img src="images/alamo23.jpeg" alt="Alamo23" class="about-photo">
-                <img src="images/cancun.jpeg" alt="Cancun" class="about-photo"> -->
-                <!-- <img src="images/halloween.jpeg" alt="Halloween" class="about-photo">
-                <img src="images/jodi.png" alt="Jodi" class="about-photo"> -->
-            </div>
+            <!-- <div class="info-list">
+                <div class="info-card">
+                    <img src="./images/alamo24.png" alt="alamo24 image" class="info-image">
+                    <div class="info-content">
+                        <h3>Furteelay Shokeen</h3>
+                        <p>
+                            Description here
+                        </p>
+                        <ul class="comp-list" aria-label="comps">
+                            <li class="comp-pill">1st Place Derby City 2022</li>
+                            <li class="comp-pill">1st Place Bhangra at the Alamo 2023</li>
+                            <li class="comp-pill">1st Place Bhangra at the Alamo 2024</li>
+                            <li class="comp-pill">1st Place Boston Bhangra 2024</li>
+                        </ul>
+                    </div>
+                </div>
+            </div> -->
         </section>
         <section id="projects" style="padding-top: 100px;">
             <h2>Projects</h2>
             <div class="project-list">
                 <div class="project-card">
-                    <div class="project-media">
-                        <img src="./images/yolov8pic.png" alt="YOLOv8 image" class="project-image">
+                    <img src="./images/yolov8pic.png" alt="YOLOv8 image" class="project-image">
+                    <div class="project-content">
+                        <h3>Real-Time Object Detector</h3>
+                        <p>
+                            Real-time object detection using the <strong>YOLOv8</strong> computer vision model, combined with <strong>OpenCV</strong> live video capture to visualize detected objects with confidence scores.
+                        </p>
+                        <ul class="tech-list" aria-label="tech used">
+                            <li class="tech-pill tech--python">Python</li>
+                            <li class="tech-pill tech--opencv">OpenCV</li>
+                            <li class="tech-pill tech--yolov8">YOLOv8</li>
+                        </ul>
+                        <a href="https://github.com/sungatshienh/cv" target="_blank" rel="noopener noreferrer">
+                            <img src="./images/github.png" alt="GitHub Logo" class="github-logo">
+                        </a>
                     </div>
-                    <h3>Real-Time Object Detector</h3>
-                    <p>
-                        Real-time object detection using the <strong>YOLOv8</strong> computer vision model, combined with <strong>OpenCV</strong> live video capture to visualize detected objects with confidence scores.
-                    </p>
-                    <a href="https://github.com/sungatshienh/cv" target="_blank" rel="noopener noreferrer">
-                        <img src="./images/github.png" alt="GitHub Logo" class="github-logo">
-                    </a>
-                    
                 </div>
+                <div class="project-card">
+                    <img src="./images/ims.png" alt="IMS image" class="project-image">
+                    <div class="project-content">
+                        <h3>Inventory Management Portal</h3>
+                        <p>
+                            Developed a full-stack inventory management system allowing users to register, log in, and securely access personalized dashboard pages.
+                        </p>
+                        <ul class="tech" aria-label="tech used">
+                            <li class="tech-pill tech--html">HTML</li>
+                            <li class="tech-pill tech--css">CSS</li>
+                            <li class="tech-pill tech--javascript">JavaScript</li>
+                            <li class="tech-pill tech--php">PHP</li>
+                            <li class="tech-pill tech--sql">SQL</li>
+                        </ul>
+                        <!-- <a href="https://github.com/sungatshienh/cv" target="_blank" rel="noopener noreferrer">
+                            <img src="./images/github.png" alt="GitHub Logo" class="github-logo">
+                        </a> -->
+                    </div>
+                </div>
+            </div>
         </section>
         <!--<section id="contact" style="padding-top: 100px;">
             <h2>Contact</h2>
