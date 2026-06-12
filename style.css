@@ -23,15 +23,15 @@
     --accent: #6e1423;
 
     /* Uniform cream text everywhere */
-    --heading-color: #F5EFD6;
-    --text-color: #F5EFD6;
-    --hero-color: #F5EFD6;
+    --heading-color: #FCF9EE;
+    --text-color: #FCF9EE;
+    --hero-color: #FCF9EE;
 
     /* Translucent dark fill for the project / info boxes */
     --card-bg: rgba(33, 33, 33, 0.30);
     --card-border: rgba(255, 255, 255, 0.14);
-    --card-heading: #F5EFD6;
-    --card-text: #F5EFD6;
+    --card-heading: #FCF9EE;
+    --card-text: #FCF9EE;
 }
 
 body {
@@ -43,11 +43,15 @@ body {
     font-size: 16px;
     margin: 0;
     padding: 0;
-    overscroll-behavior-y: contain;
+    overscroll-behavior: none;
+    touch-action: none;
     display: flex;
     flex-direction: column;
     background-color: var(--page-bg);
-    height: 100vh;
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100dvh;
     overflow: hidden;
     transition: background-color 0.4s ease, color 0.4s ease;
 }
@@ -98,7 +102,7 @@ header {
             letter-spacing: 0.02em;
             white-space: nowrap;
             margin-left: 0;
-            color: #F5EFD6;
+            color: #FCF9EE;
             font-size: 18px;
             transition: transform 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
         }
@@ -116,7 +120,7 @@ header {
         text-decoration: none;
         font-size: 13px;
         font-weight: 400;
-        color: #F5EFD6;
+        color: #FCF9EE;
         padding: 8px 15px;
         border-radius: 30px;
         background: none;
@@ -423,7 +427,7 @@ footer {
 }
 
 .contact {
-    color: #F5EFD6;
+    color: #FCF9EE;
     margin: 10px 0;
     font-family: 'Rowdies', sans-serif;
     padding: 0;
@@ -432,13 +436,13 @@ footer {
 
 .contact-title {
   font-size: 18px;
-  color: #F5EFD6;
+  color: #FCF9EE;
   margin-bottom: 8px;
 }
 
 .contact p {
   font-size: 14px;
-  color: #F5EFD6;
+  color: #FCF9EE;
   margin: 5px 0 10px;
 }
 
