@@ -13,29 +13,11 @@
 }
 
 :root {
-    --base: #555;
-    --base-100: #f1f1f1;
-    --base-400: #555;
-    --base-800: #000;
-    --beige: #ede8d0;
-    --beige-100: #fbfaf5;
-    --beige-400: #ede8d0;
-    --beige-800: #787569;
-    --purple: #6a5acd;
-    --purple-100: #b5a8ef;
-    --purple-400: #6a5acd;
-    --purple-800: #4b3b8b;
+    --page-bg: #646464;
 
-    /* Darker burgundy page background */
-    --page-bg: #000000;
-    --accent: #ffffff;
-
-    /* Uniform cream text everywhere */
     --heading-color: #FCF9EE;
     --text-color: #FCF9EE;
-    --hero-color: #FCF9EE;
-
-    /* Translucent dark fill for the project / info boxes */
+    
     --card-bg: rgba(33, 33, 33, 0.30);
     --card-border: rgba(255, 255, 255, 0.14);
     --card-heading: #FCF9EE;
@@ -51,7 +33,6 @@ body {
     font-size: 24px;
     margin: 0;
     padding: 0;
-    overscroll-behavior: none;
     touch-action: none;
     display: flex;
     flex-direction: column;
@@ -62,7 +43,7 @@ body {
     height: 100dvh;
     overflow: hidden;
     transition: background-color 0.4s ease, color 0.4s ease;
-    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(79, 172, 254, 0) 70%);
+    /*background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 0%, rgba(79, 172, 254, 0) 70%);*/
     height: 100vh;
 }
 
@@ -805,16 +786,7 @@ footer {
     inset: 0;
     width: 100%;
     height: 100%;
-    z-index: 0;             /* sits above the page bg, below content */
+    z-index: -1;            /* above the black page bg, below all content */
     pointer-events: none;
     opacity: 0.06;          /* very dim — raise toward 0.15 for more */
-    mix-blend-mode: screen; /* lets the noise glow over pure black */
-}
-
-/* Keep all real content above the static */
-header,
-main,
-#lightbox {
-    position: relative;
-    z-index: 1;
 }
