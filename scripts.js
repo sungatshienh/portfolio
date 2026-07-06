@@ -71,7 +71,7 @@ window.addEventListener('scroll', function () {
         header.classList.remove('shrunk');
     }
 });
-/* Dim black-and-white TV static */
+/* Dim black-and-white TV static 
 document.addEventListener('DOMContentLoaded', function tvStatic() {
     const canvas = document.getElementById('tv-static');
     if (!canvas) return;
@@ -107,4 +107,4 @@ document.addEventListener('DOMContentLoaded', function tvStatic() {
         ctx.putImageData(imageData, 0, 0);
     }
     requestAnimationFrame(draw);
-});
+});*/
