@@ -35,7 +35,7 @@ html {
   background-repeat: repeat;
   background-size: cover;
   background-position: center;
-  background-attachment: scroll;
+  background-attachment: fixed;
   margin: 0;
   padding: 0;
   height: 100%;
@@ -67,6 +67,11 @@ body::after {
   inset: 0;
   z-index: -1;
   pointer-events: none;
+}
+
+.scroll-fade {
+  transition: opacity 0.15s linear;
+  will-change: opacity;
 }
 
 h2 {
@@ -152,6 +157,7 @@ section p {
   flex-direction: column;
   gap: 5px;
   padding-right: 34px;
+  container-type: inline-size;
 }
 
 .project-card h3 {
@@ -178,8 +184,8 @@ section p {
 
 .tech-list {
   display: flex;
-  flex-wrap: nowrap;
-  gap: clamp(3px, 0.8vw, 5px);
+  flex-wrap: wrap;
+  gap: clamp(3px, 1.5cqw, 5px);
   margin: 5px 0 0;
   padding: 0;
   list-style: none;
@@ -191,25 +197,65 @@ section p {
   align-items: center;
   flex: 0 1 auto;
   white-space: nowrap;
-  padding: clamp(2px, 0.6vw, 4px) clamp(4px, 1.4vw, 8px);
+  padding: clamp(2px, 1.2cqw, 4px) clamp(4px, 2.6cqw, 8px);
   border-radius: 999px;
-  font-size: clamp(10px, 1.7vw, 10px);
+  font-size: clamp(7px, 3cqw, 10px);
   line-height: 1;
   color: var(--text-color);
   border: 1px solid color-mix(in srgb, #ffffff 45%, var(--card-bg));
 }
 
 .site-header {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   width: 100%;
   padding: 16px 10%;
+  margin-top: 10px;
+  border-bottom: 2px solid var(--card-border);
+}
+
+.site-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(120, 180, 255, 0.15) 25%,
+    rgba(120, 180, 255, 0.95) 50%,
+    rgba(120, 180, 255, 0.15) 75%,
+    transparent 100%
+  );
+  background-size: 40% 100%;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 0 6px rgba(120, 180, 255, 0.85));
+  animation: header-glow 4.5s ease-in-out infinite alternate;
+}
+
+@keyframes header-glow {
+  from {
+    background-position: 0% 0;
+  }
+  to {
+    background-position: 100% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header::after {
+    animation: none;
+  }
 }
 
 .contact-icons {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .linkedin-logo,
@@ -295,6 +341,11 @@ section p {
   .project-card a {
     top: auto;
     bottom: 12px;
+  }
+
+  .tech-pill {
+    font-size: clamp(11px, 3.5cqw, 14px);
+    padding: clamp(3px, 1.4cqw, 6px) clamp(6px, 3cqw, 11px);
   }
 }
 
