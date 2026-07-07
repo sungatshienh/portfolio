@@ -10,9 +10,17 @@ const pipParams = new URLSearchParams(window.location.search);
 const pipDepth = parseInt(pipParams.get("pipDepth") || "0", 10);
 const isPip = pipDepth > 0;
 
+// ===== Mobile: run a lighter scene, not a skipped one =====
+// Narrow/phone-size screens still get the starfield, just with fewer
+// planets/galaxies (same idea as the isPip scale-down below) since phones
+// have less GPU headroom to spare. Matches the site's existing 800px
+// mobile breakpoint (see style.css).
+const MOBILE_BREAKPOINT = 800;
+const isMobile = window.innerWidth <= MOBILE_BREAKPOINT;
+
 // ===== Star field settings =====
 let stars, starGeometry, starPositions, velocities, starAngles;
-const count = isPip ? 180 : 300; // how many stars (fewer inside the small PiP mirror)
+const count = isPip ? 30 : 30; // how many stars (fewer inside the small PiP mirror)
 const speed = 10; // how fast stars drift toward the camera
 const FIELD_RADIUS = 1000; // how wide/tall the star field spawns around the camera
 
@@ -56,9 +64,19 @@ function init() {
   scene.add(sunLight);
   scene.add(new THREE.AmbientLight(0x1a2a4a, 0.55));
 
-  renderer = new THREE.WebGLRenderer({ antialias: !isPip, alpha: true });
+  // Performance: no MSAA (fragment shading cost below is the real budget
+  // sink, not jagged edges on a blurred background), pixel ratio capped to
+  // 1 regardless of device (rendering at 2x-3x on retina/high-DPI screens
+  // means 4x-9x the pixels to shade for zero perceptible gain on a
+  // decorative background), and low-power GPU preference to avoid spinning
+  // up a laptop's discrete GPU just for this.
+  renderer = new THREE.WebGLRenderer({
+    antialias: false,
+    alpha: true,
+    powerPreference: "low-power",
+  });
   renderer.setSize(w, h);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, isPip ? 1 : 2));
+  renderer.setPixelRatio(1);
   container.appendChild(renderer.domElement);
 
   clock = new THREE.Clock();
@@ -401,8 +419,15 @@ const PLANET_PALETTE = [
 // Creates all the galaxy sprites and planet spheres, gives each one a
 // unique random color/size/tilt, and scatters them out into the scene.
 function createDecorations() {
-  const GALAXY_COUNT = isPip ? 3 : 6; // how many nebula sprites
-  const PLANET_COUNT = isPip ? 4 : 9; // how many planets
+  const GALAXY_COUNT = isPip || isMobile ? 2 : 4; // how many nebula sprites
+  const PLANET_COUNT = isPip || isMobile ? 3 : 6; // how many planets
+
+  // Shared, low-poly geometry reused across every planet (only the color
+  // texture and per-instance scale/tilt differ) - one 16x16 sphere instead
+  // of a fresh 32x32 one per planet cuts both setup cost and triangle count
+  // roughly 4x, with no visible difference at this on-screen size.
+  const sphereGeometry = new THREE.SphereGeometry(1, 16, 16);
+  const atmosphereGeometry = new THREE.SphereGeometry(1, 16, 16);
 
   for (let i = 0; i < GALAXY_COUNT; i++) {
     const mid = randomHue(NEBULA_PALETTE);
@@ -433,26 +458,24 @@ function createDecorations() {
 
     const group = new THREE.Group();
 
-    const sphereMat = new THREE.MeshPhongMaterial({
+    // Lambert instead of Phong: no specular calculation per-pixel, cheaper
+    // to shade, and the difference is barely visible at this scale.
+    const sphereMat = new THREE.MeshLambertMaterial({
       map: createPlanetSurfaceTexture(base.join(",")),
-      shininess: 6 + Math.random() * 40,
-      specular: new THREE.Color("rgb(120,150,200)"),
     });
-    const sphereMesh = new THREE.Mesh(
-      new THREE.SphereGeometry(1, 32, 32),
-      sphereMat,
-    );
+    const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMat);
     group.add(sphereMesh);
 
     const atmosphereMesh = new THREE.Mesh(
-      new THREE.SphereGeometry(1.12, 32, 32),
+      atmosphereGeometry,
       createAtmosphereMaterial(`rgb(${atmosphere.join(",")})`),
     );
+    atmosphereMesh.scale.set(1.12, 1.12, 1.12);
     group.add(atmosphereMesh);
 
     if (ring) {
       const ringMesh = new THREE.Mesh(
-        new THREE.RingGeometry(1.5 + Math.random() * 0.3, 2.3 + Math.random() * 0.6, 64),
+        new THREE.RingGeometry(1.5 + Math.random() * 0.3, 2.3 + Math.random() * 0.6, 32),
         new THREE.MeshBasicMaterial({
           map: createRingTexture(ring.join(",")),
           side: THREE.DoubleSide,
@@ -661,6 +684,11 @@ function updateDecorations(dt) {
 // draws the frame.
 function animate() {
   requestAnimationFrame(animate);
+
+  // Don't do any work while the tab is in the background - nobody's
+  // looking, and clock.getDelta() would otherwise report one huge jump
+  // when the tab regains focus (capped below, but simplest to just skip).
+  if (document.hidden) return;
 
   const dt = Math.min(clock.getDelta(), 0.05); // time since last frame (capped)
   const t = clock.getElapsedTime(); // total time running, used for idle drift

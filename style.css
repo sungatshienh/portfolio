@@ -239,7 +239,7 @@ body.pip-zooming > *:not(.pip-frame) {
 html {
   scroll-behavior: smooth;
   background-color: var(--page-bg);
-  background-image: url("./images/space3repeat.png");
+  background-image: url("./images/space3.jpg");
   background-repeat: repeat;
   background-size: cover;
   background-position: center;
@@ -267,7 +267,6 @@ body::before {
   inset: 0;
   z-index: -2;
   pointer-events: none;
-  background: rgba(0, 0, 0, 0.5);
 }
 
 body::after {
@@ -288,7 +287,15 @@ h2 {
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  opacity: 0.6;
+  /* A color-based gray instead of opacity: the scroll-fade script applies
+     its own dynamic opacity directly to some elements (like #projects > h2)
+     and to ancestor sections for others (About Me/Hobbies) - if this dimming
+     were also done via opacity, whichever element gets the inline override
+     would lose it while sections-with-h2-children keep multiplying it in,
+     making headers look inconsistently gray depending on which one got
+     targeted. Color isn't touched by that mechanism, so it stays consistent
+     everywhere regardless of fade state. */
+  color: rgba(252, 249, 238, 0.6);
 }
 
 p {
@@ -322,24 +329,24 @@ section p {
 .project-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
   margin-top: 6px;
   max-width: 1200px;
 }
 
 .project-card {
   position: relative;
-  display: grid;
-  grid-template-columns: 130px 1fr;
-  column-gap: 16px;
+  display: flex;
   align-items: center;
-  flex-shrink: 0;
-  padding: 10px;
+  gap: 16px;
+  min-width: 0;
+  overflow: hidden;
+  padding: 12px;
   border: 2px solid var(--card-border);
-  border-radius: 16px;
+  border-radius: 15px;
   background-color: var(--card-bg);
-  backdrop-filter: blur(2px) saturate(130%);
-  -webkit-backdrop-filter: blur(2px) saturate(130%);
+  backdrop-filter: blur(5px) saturate(130%);
+  -webkit-backdrop-filter: blur(5px) saturate(130%);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
   transition:
     transform 0.3s ease,
@@ -351,21 +358,42 @@ section p {
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
 }
 
+/* Screenshot thumbnail - fixed width, always 16:9, never deformed
+   (object-fit:cover crops instead of stretching). */
 .project-image {
-  grid-column: 1 / 2;
-  width: 130px;
-  height: 80px;
+  flex-shrink: 0;
+  width: 160px;
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   display: block;
   border-radius: 10px;
 }
 
+/* App icon box - a fixed square (icons are square, not 16:9 screenshots;
+   forcing that ratio would either crop or pad them oddly). */
+.project-icon-box {
+  flex-shrink: 0;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+}
+
+.project-icon {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
 /* A live iframe of this very site, scaled down (via JS) to fit this box -
    the "screenshot" for this project card is genuinely the live page. */
 .project-site-frame {
-  grid-column: 1 / 2;
-  width: 130px;
-  height: 80px;
+  flex-shrink: 0;
+  width: 160px;
+  aspect-ratio: 16 / 9;
   border-radius: 10px;
   overflow: hidden;
   background: #000;
@@ -380,41 +408,88 @@ section p {
 
 .project-content {
   min-width: 0;
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding-right: 34px;
   container-type: inline-size;
 }
 
 .project-card h3 {
   margin: 0;
-  font-size: 80%;
+  font-size: 70%;
 }
 
+/* Collapsed by default - clicking the card's icon/image (see scripts.js)
+   toggles .expanded on the card, sliding the description open instead of
+   always showing it. */
 .project-card p {
   margin: 0;
-  font-size: 60%;
+  font-size: 50%;
+  color: rgba(252, 249, 238, 0.6);
 }
 
-.project-card a {
+/* Covers the whole card and is invisible/inert until hovered, at which
+   point it dims the card with a translucent gray layer and reveals a big
+   centered redirect arrow - pointer-events stay off while hidden so the
+   card underneath (and its own :hover) keeps working normally; enabling
+   pointer-events only once revealed is what lets clicking anywhere on the
+   card navigate, without blocking hover detection on the way in. */
+.project-link {
   position: absolute;
-  top: 12px;
-  right: 15px;
-  line-height: 0;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+  background-color: rgba(20, 20, 20, 0);
+  color: var(--text-color);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.25s ease,
+    background-color 0.25s ease;
 }
 
-.project-card a .github-logo {
-  width: 28px;
-  margin: 0;
+.project-card:hover .project-link {
+  opacity: 1;
+  pointer-events: auto;
+  background-color: rgba(20, 20, 20, 0.55);
+}
+
+.project-link:hover {
+  background-color: rgba(20, 20, 20, 0.7);
+}
+
+.project-link-icon {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  display: block;
+  transform: scale(0.7);
+  transition: transform 0.25s ease;
+}
+
+.project-card:hover .project-link-icon {
+  transform: scale(1);
+}
+
+.project-link:hover .project-link-icon {
+  transform: scale(1.1);
 }
 
 .tech-list {
   display: flex;
   flex-wrap: wrap;
   gap: clamp(3px, 1.5cqw, 5px);
-  margin: 5px 0 0;
+  /* Pushes the pills to the bottom of .project-content (which now fills the
+     card's remaining height), so they line up at the same spot across every
+     card regardless of description length. */
+  margin: auto 0 0;
   padding: 0;
+  /* Reserve room so pills don't wrap under the GitHub badge in the
+     card's bottom-right corner. */
+  padding-right: 40px;
   list-style: none;
   min-width: 0;
 }
@@ -541,26 +616,47 @@ section p {
     font-size: 20px;
   }
 
+  .project-list {
+    gap: 10px;
+  }
+
   .project-card {
-    grid-template-columns: 1fr;
-    row-gap: 10px;
-    padding: 10px 12px;
+    padding: 8px;
+    gap: 10px;
   }
 
-  .project-image {
-    width: 100%;
-    height: auto;
-  }
-
+  .project-image,
   .project-site-frame {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 130 / 80;
+    width: 90px;
   }
 
-  .project-card a {
-    top: auto;
-    bottom: 12px;
+  .project-icon-box {
+    width: 100px;
+    height: 100px;
+  }
+
+  /* Touch devices don't really support :hover, so the full-card gray
+     reveal (desktop) doesn't translate - permanently graying out every
+     card with no hover to justify it would be worse, not better. Instead,
+     shrink it back down to a small always-visible corner tap target. */
+  .project-link {
+    inset: auto 10px 10px auto;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: var(--card-bg);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .project-link-icon {
+    width: 22px;
+    height: 22px;
+    transform: none;
+  }
+
+  .tech-list {
+    padding-right: 30px;
   }
 
   .tech-pill {

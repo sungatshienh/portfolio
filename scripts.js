@@ -1,3 +1,17 @@
+// Restores scroll position after a reload triggered by opening the PiP
+// frame (see activatePip below) - runs first, before anything else that
+// reads scroll position (like the fade effect), so nothing flashes at the
+// wrong spot.
+(function restorePipScroll() {
+  const saved = sessionStorage.getItem("pipScrollRestore");
+  if (saved === null) return;
+  sessionStorage.removeItem("pipScrollRestore");
+  const y = parseInt(saved, 10);
+  if (!Number.isNaN(y)) {
+    document.addEventListener("DOMContentLoaded", () => window.scrollTo(0, y));
+  }
+})();
+
 function openLightbox(src, alt) {
   const lightbox = document.getElementById("lightbox");
   const img = document.getElementById("lightbox-img");
@@ -266,40 +280,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Activating the PiP (click or Enter/Space, since it's a role="button"
-  // div): FLIP-animate it from its exact current position/size out to full
-  // screen (a real smooth zoom, not a snap), then hand off interaction to
-  // the mirror directly. You can just keep "entering" mirrors indefinitely,
-  // down to the depth cap.
+  // div): the FLIP-animate-and-hand-off-to-the-iframe approach used to live
+  // here, but it broke on mobile. Simpler and reliable everywhere: save the
+  // scroll position, then just reload the real page - restorePipScroll (top
+  // of this file) puts the scroll position back once the fresh page loads.
   const activatePip = () => {
     pipActivated = true;
-    const rect = pipFrame.getBoundingClientRect();
-    document.body.appendChild(pipFrame);
-
-    pipFrame.style.position = "fixed";
-    pipFrame.style.top = `${rect.top}px`;
-    pipFrame.style.left = `${rect.left}px`;
-    pipFrame.style.width = `${rect.width}px`;
-    pipFrame.style.height = `${rect.height}px`;
-    pipFrame.style.margin = "0";
-    pipFrame.getBoundingClientRect();
-
-    requestAnimationFrame(() => {
-      pipFrame.classList.add("zooming");
-      pipIframe.style.transform = "scale(1)";
-    });
-
+    sessionStorage.setItem("pipScrollRestore", String(window.scrollY));
     document.body.classList.add("pip-zooming");
-
-    pipFrame.addEventListener(
-      "transitionend",
-      () => {
-        pipIframe.style.pointerEvents = "auto";
-        pipFrame.removeAttribute("role");
-        pipFrame.removeAttribute("tabindex");
-        pipFrame.style.cursor = "default";
-      },
-      { once: true },
-    );
+    window.setTimeout(() => {
+      window.location.reload();
+    }, 200);
   };
   pipFrame.addEventListener("click", activatePip);
   pipFrame.addEventListener("keydown", (e) => {
