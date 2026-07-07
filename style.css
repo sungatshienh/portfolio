@@ -17,8 +17,8 @@
 #star-container {
   position: fixed;
   inset: 0;
-  z-index: -1; /* Keeps stars behind your content. Change to 1+ to put them on top. */
-  pointer-events: none; /* Allows you to click your buttons/links through the stars */
+  z-index: -1;
+  pointer-events: none;
 }
 
 :root {
@@ -54,7 +54,9 @@ body::before {
   z-index: -2;
   pointer-events: none;
   background-image: url("./images/space1small.png");
-  background-size: 80%;
+  background-attachment: scroll;
+  background-repeat: no-repeat;
+  background-size: cover;
   background-position: center;
 }
 
@@ -271,10 +273,6 @@ section p {
     margin: 12px auto;
     padding: 16px 7%;
   }
-
-  body::before {
-  background-size: 150%;
-}
 
   section {
     padding: 4px 7%;
