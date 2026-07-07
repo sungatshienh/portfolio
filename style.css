@@ -54,9 +54,8 @@ body::before {
   z-index: -2;
   pointer-events: none;
   background-image: url("./images/space1small.png");
-  background-size: cover;
+  background-size: auto 130%;
   background-position: center;
-  background-repeat: no-repeat;
 }
 
 body::after {
