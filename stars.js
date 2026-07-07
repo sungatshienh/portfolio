@@ -12,8 +12,8 @@ const isPip = pipDepth > 0;
 
 // ===== Star field settings =====
 let stars, starGeometry, starPositions, velocities, starAngles;
-const count = isPip ? 180 : 1000; // how many stars (fewer inside the small PiP mirror)
-const speed = 40; // how fast stars drift toward the camera
+const count = isPip ? 180 : 300; // how many stars (fewer inside the small PiP mirror)
+const speed = 10; // how fast stars drift toward the camera
 const FIELD_RADIUS = 1000; // how wide/tall the star field spawns around the camera
 
 // ===== Camera base position =====
@@ -575,24 +575,37 @@ function updateStarField(dt) {
   const camX = camera.position.x;
   const camY = camera.position.y;
   const camZ = camera.position.z;
+  const fovRad = (camera.fov * Math.PI) / 180;
 
   for (let i = 0; i < count; i++) {
     positions[i * 3 + 2] += velocities[i] * dt;
 
     const aheadDist = camZ - positions[i * 3 + 2]; // positive = in front of camera
+
+    // How wide the camera's actual view cone is AT THIS STAR'S OWN DEPTH -
+    // matters because with a wide FOV, the visible cone is much narrower
+    // close up than far away. Checking against a fixed radius regardless of
+    // depth either wastes near stars off to the side (invisible) or leaves
+    // gaps at the far edges, which is what made the field look sparse/empty
+    // at some zoom levels.
+    const halfHeight = Math.tan(fovRad / 2) * Math.max(1, aheadDist);
+    const halfWidth = halfHeight * camera.aspect;
     const dx = positions[i * 3] - camX;
     const dy = positions[i * 3 + 1] - camY;
     const tooFarSideways =
-      Math.abs(dx) > FIELD_RADIUS || Math.abs(dy) > FIELD_RADIUS;
+      Math.abs(dx) > halfWidth * 1.3 || Math.abs(dy) > halfHeight * 1.3;
 
     if (
       aheadDist < -STAR_MAX_BEHIND ||
       aheadDist > STAR_MAX_AHEAD ||
       tooFarSideways
     ) {
-      positions[i * 3] = camX + (Math.random() * 2 - 1) * FIELD_RADIUS;
-      positions[i * 3 + 1] = camY + (Math.random() * 2 - 1) * FIELD_RADIUS;
-      positions[i * 3 + 2] = camZ - 150 - Math.random() * 650;
+      const spawnDist = 150 + Math.random() * 650;
+      const spawnHalfHeight = Math.tan(fovRad / 2) * spawnDist;
+      const spawnHalfWidth = spawnHalfHeight * camera.aspect;
+      positions[i * 3] = camX + (Math.random() * 2 - 1) * spawnHalfWidth;
+      positions[i * 3 + 1] = camY + (Math.random() * 2 - 1) * spawnHalfHeight;
+      positions[i * 3 + 2] = camZ - spawnDist;
     }
   }
   starGeometry.attributes.position.needsUpdate = true;

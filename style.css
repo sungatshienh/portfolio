@@ -41,8 +41,8 @@
 }
 
 .space-toggle-icon {
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 0 0 rgba(120, 180, 255, 0));
@@ -89,8 +89,20 @@ body.immersive-mode .lightbox {
   pointer-events: none;
 }
 
-.pip-dropdown {
-  display: inline-flex;
+.pip-divider {
+  width: 1px;
+  height: 20px;
+  margin-left: 10px;
+  background: rgba(255, 255, 255, 0.25);
+  flex-shrink: 0;
+  transition:
+    opacity 0.4s ease,
+    margin-left 0.4s ease;
+}
+
+body.immersive-mode .pip-divider {
+  opacity: 0;
+  margin-left: 0;
 }
 
 .pip-toggle-btn {
@@ -106,18 +118,28 @@ body.immersive-mode .lightbox {
   background: transparent;
   color: var(--text-color);
   cursor: pointer;
+  overflow: hidden;
+  max-width: 35px;
   transition:
     transform 0.3s ease,
-    color 0.2s ease;
+    color 0.2s ease,
+    max-width 0.4s ease,
+    margin-left 0.4s ease,
+    opacity 0.4s ease;
+}
+
+body.immersive-mode .pip-toggle-btn {
+  opacity: 0;
+  max-width: 0;
+  margin-left: 0;
+  pointer-events: none;
 }
 
 .pip-toggle-icon {
-  width: 22px;
-  height: 22px;
-  object-fit: contain;
+  width: 20px;
+  height: 20px;
   display: block;
-  filter: drop-shadow(0 0 0 rgba(120, 180, 255, 0));
-  transition: filter 0.2s ease;
+  transition: transform 0.35s ease;
 }
 
 .pip-toggle-btn:hover {
@@ -125,9 +147,14 @@ body.immersive-mode .lightbox {
 }
 
 .pip-toggle-btn.active .pip-toggle-icon {
-  filter: drop-shadow(0 0 6px rgba(120, 180, 255, 0.9));
+  transform: rotate(180deg);
 }
 
+/* Floats below the header as its own overlay (not part of the header's own
+   box), matching where it always used to live - toggled via the [hidden]
+   attribute. Loads lazily (only once first opened) since eagerly running a
+   whole second copy of the starfield/Three.js scene in the background at
+   all times was the main source of lag. */
 .pip-panel {
   position: absolute;
   top: calc(100% + 12px);
@@ -166,17 +193,17 @@ body.immersive-mode .lightbox {
 }
 
 .pip-frame:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
   box-shadow: 0 0 0 1px rgba(120, 180, 255, 0.6);
 }
 
 /* The iframe is sized (via JS) to match the real browser viewport exactly,
    so the mirrored page lays out identically (same responsive breakpoints,
    same content) to the main page, then scaled down with a transform to fit
-   the small dropdown panel - that's what keeps it a true "mini version" of
-   the live site instead of a distorted or mismatched crop. Its transform
-   transitions on the same schedule as the frame's width/height above, so
-   the mirrored page scales up in lockstep as the frame grows to fullscreen. */
+   the frame - that's what keeps it a true "mini version" of the live site
+   instead of a distorted or mismatched crop. Its transform transitions on
+   the same schedule as the frame's width/height, so the mirrored page
+   scales up in lockstep as the frame grows to fullscreen. */
 .pip-frame iframe {
   display: block;
   border: none;
@@ -240,6 +267,7 @@ body::before {
   inset: 0;
   z-index: -2;
   pointer-events: none;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 body::after {
@@ -332,6 +360,24 @@ section p {
   border-radius: 10px;
 }
 
+/* A live iframe of this very site, scaled down (via JS) to fit this box -
+   the "screenshot" for this project card is genuinely the live page. */
+.project-site-frame {
+  grid-column: 1 / 2;
+  width: 130px;
+  height: 80px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #000;
+}
+
+.project-site-frame iframe {
+  display: block;
+  border: none;
+  pointer-events: none;
+  transform-origin: top left;
+}
+
 .project-content {
   min-width: 0;
   display: flex;
@@ -379,7 +425,7 @@ section p {
   flex: 0 1 auto;
   white-space: nowrap;
   padding: clamp(2px, 1.2cqw, 4px) clamp(4px, 2.6cqw, 8px);
-  border-radius: 999px;
+  border-radius: 7px;
   font-size: clamp(7px, 3cqw, 10px);
   line-height: 1;
   color: var(--text-color);
@@ -394,10 +440,11 @@ section p {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 30px;
+  padding: 6px 10px;
   margin-top: 16px;
-  border-radius: 999px;
-  background-color: var(--card-bg);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  background-color: rgba(20, 20, 24, 0.78);
   backdrop-filter: blur(4px) saturate(130%);
   -webkit-backdrop-filter: blur(4px) saturate(130%);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
@@ -415,63 +462,6 @@ section p {
 
 @media (prefers-reduced-motion: reduce) {
   .site-header {
-    animation: none;
-  }
-}
-
-@property --glow-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-.site-header::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 2px;
-  pointer-events: none;
-  background: conic-gradient(
-    from var(--glow-angle),
-    rgba(120, 180, 255, 0) 0deg,
-    rgba(120, 180, 255, 0) 245deg,
-    rgba(160, 205, 255, 1) 295deg,
-    rgba(225, 240, 255, 1) 325deg,
-    rgba(160, 205, 255, 1) 355deg,
-    rgba(120, 180, 255, 0) 360deg
-  );
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  filter: drop-shadow(0 0 4px rgba(200, 225, 255, 1))
-    drop-shadow(0 0 10px rgba(130, 190, 255, 1))
-    drop-shadow(0 0 22px rgba(120, 180, 255, 0.9))
-    drop-shadow(0 0 38px rgba(100, 165, 255, 0.6));
-  animation:
-    header-rotate 3s linear infinite,
-    header-glow 2.4s ease-in-out infinite alternate;
-}
-
-@keyframes header-rotate {
-  to {
-    --glow-angle: 360deg;
-  }
-}
-
-@keyframes header-glow {
-  from {
-    opacity: 0.35;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .site-header::after {
     animation: none;
   }
 }
@@ -560,6 +550,12 @@ section p {
   .project-image {
     width: 100%;
     height: auto;
+  }
+
+  .project-site-frame {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 130 / 80;
   }
 
   .project-card a {

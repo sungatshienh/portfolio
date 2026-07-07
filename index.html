@@ -50,38 +50,44 @@
           class="space-toggle-icon"
         />
       </button>
-      <div class="pip-dropdown">
-        <button
-          id="pip-toggle"
-          class="pip-toggle-btn"
-          type="button"
-          aria-pressed="false"
-          aria-expanded="false"
-          aria-controls="pip-panel"
-          aria-label="Live preview"
-          title="Live preview"
+      <div class="pip-divider" aria-hidden="true"></div>
+      <button
+        id="pip-toggle"
+        class="pip-toggle-btn"
+        type="button"
+        aria-pressed="false"
+        aria-expanded="false"
+        aria-controls="pip-panel"
+        aria-label="Live preview"
+        title="Live preview"
+      >
+        <svg
+          class="pip-toggle-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
         >
-          <img
-            src="./images/pageZoom.png"
-            alt=""
-            class="pip-toggle-icon"
-          />
-        </button>
-        <div id="pip-panel" class="pip-panel" hidden>
-          <div
-            id="pip-frame"
-            class="pip-frame"
-            role="button"
-            tabindex="0"
-            aria-label="Zoom into the mirrored site"
-            title="Zoom in"
-          >
-            <iframe
-              id="pip-iframe"
-              title="Live mirror of this site"
-              tabindex="-1"
-            ></iframe>
-          </div>
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      <div id="pip-panel" class="pip-panel" hidden>
+        <div
+          id="pip-frame"
+          class="pip-frame"
+          role="button"
+          tabindex="0"
+          aria-label="Zoom into the mirrored site"
+          title="Zoom in"
+        >
+          <iframe
+            id="pip-iframe"
+            title="Live mirror of this site"
+            tabindex="-1"
+          ></iframe>
         </div>
       </div>
     </header>
@@ -171,6 +177,38 @@
                 <li class="tech-pill">PHP</li>
                 <li class="tech-pill">SQL</li>
               </ul>
+            </div>
+          </div>
+          <div class="project-card">
+            <div id="site-frame-box" class="project-site-frame">
+              <iframe
+                id="site-frame-iframe"
+                title="Live preview of this website"
+                tabindex="-1"
+              ></iframe>
+            </div>
+            <div class="project-content">
+              <h3>This Website</h3>
+              <p>
+                Description
+              </p>
+              <ul class="tech-list" aria-label="tech used">
+                <li class="tech-pill">HTML</li>
+                <li class="tech-pill">CSS</li>
+                <li class="tech-pill">JavaScript</li>
+                <li class="tech-pill">Three.js</li>
+              </ul>
+              <a
+                href="https://github.com/sungatshienh/portfolio"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="./images/github.png"
+                  alt="GitHub Logo"
+                  class="github-logo"
+                />
+              </a>
             </div>
           </div>
         </div>
