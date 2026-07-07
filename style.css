@@ -51,17 +51,19 @@ body {
 body::before {
   content: "";
   position: fixed;
-  top: -40vh;
-  left: -40vw;
+  top: -40px;
+  bottom: -40px;
+  left: -40px;
+  right: -40px;
   width: 180vw;
   height: 180vh;
   z-index: -2;
   pointer-events: none;
   background-image: url("./images/space1small.png");
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 130%;
   background-position: center;
-  padding-bottom: env(safe-area-inset-bottom);
+  background-attachment: scroll;
 }
 
 body::after {
