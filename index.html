@@ -36,6 +36,54 @@
           />
         </a>
       </div>
+      <button
+        id="space-toggle"
+        class="space-toggle-btn"
+        type="button"
+        aria-pressed="false"
+        aria-label="Explore space"
+        title="Explore space"
+      >
+        <img
+          src="./images/astronaut2.png"
+          alt=""
+          class="space-toggle-icon"
+        />
+      </button>
+      <div class="pip-dropdown">
+        <button
+          id="pip-toggle"
+          class="pip-toggle-btn"
+          type="button"
+          aria-pressed="false"
+          aria-expanded="false"
+          aria-controls="pip-panel"
+          aria-label="Live preview"
+          title="Live preview"
+        >
+          <img
+            src="./images/pageZoom.png"
+            alt=""
+            class="pip-toggle-icon"
+          />
+        </button>
+        <div id="pip-panel" class="pip-panel" hidden>
+          <div
+            id="pip-frame"
+            class="pip-frame"
+            role="button"
+            tabindex="0"
+            aria-label="Zoom into the mirrored site"
+            title="Zoom in"
+          >
+            <iframe
+              id="pip-iframe"
+              title="Live mirror of this site"
+              tabindex="-1"
+            ></iframe>
+          </div>
+        </div>
+      </div>
     </header>
     <main>
       <section>
