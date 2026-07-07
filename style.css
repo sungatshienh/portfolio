@@ -31,6 +31,11 @@
 html {
   scroll-behavior: smooth;
   background-color: var(--page-bg);
+  background-image: url("./images/space3repeat.png");
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: scroll;
   margin: 0;
   padding: 0;
   height: 100%;
@@ -51,19 +56,9 @@ body {
 body::before {
   content: "";
   position: fixed;
-  top: -40px;
-  bottom: -40px;
-  left: -40px;
-  right: -40px;
-  width: 180vw;
-  height: 180vh;
+  inset: 0;
   z-index: -2;
   pointer-events: none;
-  background-image: url("./images/space1small.png");
-  background-repeat: no-repeat;
-  background-size: 130%;
-  background-position: center;
-  background-attachment: scroll;
 }
 
 body::after {
@@ -72,12 +67,6 @@ body::after {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.5) 0%,
-    rgba(0, 0, 0, 0.4) 45%,
-    rgba(0, 0, 0, 0.3) 100%
-  );
 }
 
 h2 {
@@ -281,7 +270,7 @@ section p {
   }
 
   section {
-    padding: 4px 7%;
+    padding: 4px 5%;
   }
 
   h2 {
@@ -311,6 +300,6 @@ section p {
 
 @media (max-width: 420px) {
   .project-card p {
-    font-size: 52%;
+    font-size: 50%;
   }
 }
