@@ -4,50 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sungat</title>
-    <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Honk:SHLN@0&display=swap" rel="stylesheet"> -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/merkur" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Caprasimo&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Chango&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
-    <script src="./scripts.js"></script>
-    <!-- <link rel="icon" type="image/png" href="./images/favicon.png"> -->
+    <script src="./scripts.js" defer></script>
 </head>
 <body>
-    <canvas id="tv-static" aria-hidden="true"></canvas>
-    <header id="header" class="expanded">
-        <a href="#info" class="logo-holder">
-            <!-- <div class="logo-text">Sungat Shienh</div> -->
-        </a>
-        <a href="#" class="mobile-toggle" onclick="toggleMobileMenu()">
-            <div class="custom-bars">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </a>
-        <nav>
-            <ul id="menu" class="menu">
-                <li><a href="#projects" class="nav-button">Projects</a></li>
-                <li><a href="#contact" class="nav-button" id="contact-button">Contact</a></li>
-            </ul>
-        </nav>
+    <header class="site-header">
+        <div class="contact-icons">
+            <a href="https://www.linkedin.com/in/sungat" target="_blank" rel="noopener noreferrer">
+                <img src="./images/linkedin.png" alt="LinkedIn Logo" class="linkedin-logo">
+            </a>
+            <a href="https://github.com/sungatshienh" target="_blank" rel="noopener noreferrer">
+                <img src="./images/github.png" alt="GitHub Logo" class="github-logo">
+            </a>
+        </div>
     </header>
     <main>
-        <div class="hero-title">
-            <!-- <h1>Sungat Shienh</h1> -->
-        </div>
-        <section id="info">
+        <section>
             <h2>About Me</h2>
             <p>I'm Sungat, a student at the University of Michigan studying Computer Science.</p>
         </section>
-        <section id="info">
+        <section>
             <h2>Hobbies</h2>
             <p>Bhangra</p>
         </section>
@@ -55,7 +31,7 @@
             <h2>Projects</h2>
             <div class="project-list">
                 <div class="project-card">
-                    <img src="./images/yolov8vid.mp4" alt="YOLOv8 video" class="project-image">
+                    <img src="./images/yolov8pic.png" alt="YOLOv8 image" class="project-image">
                     <div class="project-content">
                         <h3>Real-Time Object Detector</h3>
                         <p>
@@ -85,9 +61,6 @@
                             <li class="tech-pill tech--php">PHP</li>
                             <li class="tech-pill tech--sql">SQL</li>
                         </ul>
-                        <!-- <a href="https://github.com/sungatshienh/cv" target="_blank" rel="noopener noreferrer">
-                            <img src="./images/github.png" alt="GitHub Logo" class="github-logo">
-                        </a> -->
                     </div>
                 </div>
                 <div class="project-card">
@@ -104,21 +77,8 @@
                             <li class="tech-pill tech--php">PHP</li>
                             <li class="tech-pill tech--sql">SQL</li>
                         </ul>
-                        <!-- <a href="https://github.com/sungatshienh/cv" target="_blank" rel="noopener noreferrer">
-                            <img src="./images/github.png" alt="GitHub Logo" class="github-logo">
-                        </a> -->
                     </div>
                 </div>
-            </div>
-        </section>
-        <section id="contact" class="contact">
-            <div class="contact-icons">
-                <a href="https://www.linkedin.com/in/sungat" target="_blank" rel="noopener noreferrer">
-                    <img src="./images/linkedin.png" alt="LinkedIn Logo" class="linkedin-logo">
-                </a>
-                <a href="https://github.com/sungatshienh" target="_blank" rel="noopener noreferrer">
-                    <img src="./images/github.png" alt="GitHub Logo" class="github-logo">
-                </a>
             </div>
         </section>
     </main>
