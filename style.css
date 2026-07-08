@@ -50,6 +50,16 @@ body {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
 main {
   flex: 1;
   display: flex;
@@ -315,20 +325,6 @@ body.pip-zooming > *:not(.pip-frame) {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -3;
-  pointer-events: none;
-  background: rgba(0, 0, 0, 0);
-  transition: background 0.4s ease;
-}
-
-body.immersive-mode::before {
-  background: rgba(0, 0, 0, 1);
 }
 
 body.immersive-mode {
