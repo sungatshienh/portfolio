@@ -76,7 +76,8 @@ main {
 }
 
 section {
-  margin-bottom: 20px;
+  margin-top: 30px;
+  margin-bottom: 10px;
   padding: 20px;
   flex-shrink: 0;
   text-align: left;
@@ -115,17 +116,19 @@ a {
 
 /* Header */
 .site-header {
+  order: 1;
   position: sticky;
-  top: 18px;
+  bottom: 48px;
   z-index: 50;
   align-self: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 10px;
-  margin-top: 16px;
+  padding: 12px 20px;
+  margin-top: auto;
+  margin-bottom: 16px;
   border: 1.5px solid rgba(255, 255, 255, 0.3);
-  border-radius: 15px;
+  border-radius: 22px;
   background-color: rgba(20, 20, 24, 0.78);
   backdrop-filter: blur(4px) saturate(130%);
   -webkit-backdrop-filter: blur(4px) saturate(130%);
@@ -153,7 +156,7 @@ a {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  max-width: 200px;
+  max-width: 320px;
   transition:
     opacity 0.4s ease,
     max-width 0.4s ease;
@@ -162,13 +165,9 @@ a {
 .linkedin-logo,
 .github-logo {
   display: block;
-  width: 35px;
+  width: 60px;
   height: auto;
   transition: transform 0.3s ease;
-}
-
-.github-logo {
-  margin-left: 8px;
 }
 
 .linkedin-logo:hover,
@@ -180,9 +179,8 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 35px;
-  height: 35px;
-  margin-left: 10px;
+  width: 60px;
+  height: 60px;
   padding: 0;
   border: none;
   border-radius: 50%;
@@ -191,13 +189,12 @@ a {
   cursor: pointer;
   transition:
     transform 0.3s ease,
-    color 0.2s ease,
-    margin-left 0.4s ease;
+    color 0.2s ease;
 }
 
 .space-toggle-icon {
-  width: 30px;
-  height: 30px;
+  width: 52px;
+  height: 52px;
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 0 0 rgba(120, 180, 255, 0));
@@ -212,24 +209,31 @@ a {
   filter: drop-shadow(0 0 6px rgba(120, 180, 255, 0.9));
 }
 
-.pip-divider {
+.header-divider {
   width: 1px;
-  height: 20px;
-  margin-left: 10px;
+  height: 34px;
+  margin: 0 14px;
   background: rgba(255, 255, 255, 0.25);
   flex-shrink: 0;
   transition:
     opacity 0.4s ease,
-    margin-left 0.4s ease;
+    margin 0.4s ease;
+}
+
+.header-divider.back-divider {
+  display: none;
+}
+
+body.is-subpage .header-divider.back-divider {
+  display: block;
 }
 
 .pip-toggle-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 35px;
-  height: 35px;
-  margin-left: 10px;
+  width: 60px;
+  height: 60px;
   padding: 0;
   border: none;
   border-radius: 50%;
@@ -237,18 +241,17 @@ a {
   color: var(--text-color);
   cursor: pointer;
   overflow: hidden;
-  max-width: 35px;
+  max-width: 60px;
   transition:
     transform 0.3s ease,
     color 0.2s ease,
     max-width 0.4s ease,
-    margin-left 0.4s ease,
     opacity 0.4s ease;
 }
 
 .pip-toggle-icon {
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
   display: block;
   transition: transform 0.35s ease;
 }
@@ -264,7 +267,7 @@ a {
 /* Picture-in-picture */
 .pip-panel {
   position: absolute;
-  top: calc(100% + 12px);
+  bottom: calc(100% + 12px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 95;
@@ -348,25 +351,75 @@ body.immersive-mode .contact-icons {
   pointer-events: none;
 }
 
-body.immersive-mode .space-toggle-btn {
-  margin-left: 0;
-}
-
 body.immersive-mode main {
   opacity: 0;
   pointer-events: none;
 }
 
-body.immersive-mode .pip-divider {
+body.immersive-mode .header-divider {
   opacity: 0;
-  margin-left: 0;
+  margin: 0;
 }
 
 body.immersive-mode .pip-toggle-btn {
   opacity: 0;
   max-width: 0;
-  margin-left: 0;
   pointer-events: none;
+}
+
+/* Expandable section frames */
+.expand-frame {
+  cursor: pointer;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.2s ease;
+}
+
+.expand-frame:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 0 1px rgba(120, 180, 255, 0.6);
+}
+
+.expand-frame:focus-visible {
+  outline: 2px solid rgb(140, 190, 255);
+  outline-offset: 2px;
+}
+
+#main-content {
+  transition: opacity 0.18s ease;
+}
+
+#main-content.content-fade {
+  opacity: 0;
+}
+
+/* Standalone page back button */
+.back-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+body.is-subpage .back-btn {
+  display: inline-flex;
+}
+
+.back-btn:hover {
+  transform: scale(1.2);
+}
+
+.back-btn svg {
+  width: 36px;
+  height: 36px;
 }
 
 /* Projects */
@@ -443,6 +496,46 @@ body.immersive-mode .pip-toggle-btn {
     padding-top: 10px;
     padding-bottom: 2px;
     gap: 10px;
+  }
+
+  .site-header {
+    padding: 8px 12px;
+  }
+
+  .header-divider {
+    height: 26px;
+    margin: 0 8px;
+  }
+
+  .linkedin-logo,
+  .github-logo {
+    width: 36px;
+  }
+
+  .back-btn,
+  .space-toggle-btn,
+  .pip-toggle-btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .pip-toggle-btn {
+    max-width: 44px;
+  }
+
+  .back-btn svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .space-toggle-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .pip-toggle-icon {
+    width: 26px;
+    height: 26px;
   }
 }
 

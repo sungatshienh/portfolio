@@ -57,7 +57,7 @@ function requestFadeUpdate() {
   requestAnimationFrame(updateFade);
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function initScrollFade() {
   fadeItems = Array.from(
     document.querySelectorAll(
       "main > section:not(#projects), #projects > h2, .project-card",
@@ -65,6 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
   );
   for (const el of fadeItems) el.classList.add("scroll-fade");
   updateFade();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initScrollFade();
   window.addEventListener("scroll", requestFadeUpdate, { passive: true });
   window.addEventListener("resize", requestFadeUpdate, { passive: true });
 });
@@ -237,6 +241,103 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       activatePip();
     }
+  });
+});
+
+// Expandable section frames (About Me / Projects): clicking smoothly grows
+// the section to fill the screen (FLIP technique), then swaps the content
+// of #main-content with the fetched standalone page's <main> instead of
+// doing a real navigation — the header never reloads. The URL still
+// changes (via pushState) so it reads as "opening a new page". Falls back
+// to a real navigation if the fetch fails (e.g. opened directly from disk,
+// where fetch of local files is blocked by CORS).
+if (window.history.scrollRestoration) {
+  window.history.scrollRestoration = "manual";
+}
+
+const mainContent = document.getElementById("main-content");
+
+function isHomeUrl(url) {
+  const path = url.split("?")[0].split("#")[0];
+  return path === "" || path === "./" || path === "/" || /(^|\/)index\.html$/.test(path);
+}
+
+function currentPageFile() {
+  const path = window.location.pathname;
+  const file = path.substring(path.lastIndexOf("/") + 1);
+  return file || "index.html";
+}
+
+async function fetchPageMain(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to fetch ${url}: ${res.status}`);
+  const html = await res.text();
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  const newMain = doc.querySelector("main");
+  if (!newMain) throw new Error(`${url} has no <main>`);
+  return { html: newMain.innerHTML, title: doc.title };
+}
+
+async function swapPage(url, { pushState = true } = {}) {
+  mainContent.classList.add("content-fade");
+  await new Promise((resolve) => setTimeout(resolve, 180));
+  const { html, title } = await fetchPageMain(url);
+  mainContent.innerHTML = html;
+  if (title) document.title = title;
+  if (pushState) history.pushState({ spaUrl: url }, "", url);
+  document.body.classList.toggle("is-subpage", !isHomeUrl(url));
+  window.scrollTo(0, 0);
+  initPageContent();
+  mainContent.classList.remove("content-fade");
+}
+
+function initPageContent() {
+  initScrollFade();
+  initExpandFrames();
+}
+
+function initExpandFrames() {
+  const expandFrames = mainContent.querySelectorAll(".expand-frame");
+  for (const frame of expandFrames) {
+    if (frame.dataset.expandBound) continue;
+    frame.dataset.expandBound = "true";
+    const target = frame.dataset.href;
+    if (!target) continue;
+
+    const activate = () => {
+      swapPage(target).catch(() => {
+        window.location.href = target;
+      });
+    };
+
+    frame.addEventListener("click", activate);
+    frame.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        activate();
+      }
+    });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (mainContent) initPageContent();
+
+  const backBtn = document.querySelector(".back-btn");
+  if (backBtn) {
+    backBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const target = backBtn.getAttribute("href") || "index.html";
+      swapPage(target).catch(() => {
+        window.location.href = target;
+      });
+    });
+  }
+});
+
+window.addEventListener("popstate", () => {
+  swapPage(currentPageFile(), { pushState: false }).catch(() => {
+    window.location.reload();
   });
 });
 
