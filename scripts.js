@@ -1,7 +1,5 @@
-// Restores scroll position after a reload triggered by opening the PiP
-// frame (see activatePip below) - runs first, before anything else that
-// reads scroll position (like the fade effect), so nothing flashes at the
-// wrong spot.
+// Restores scroll position after a reload triggered by opening the PiP frame.
+// Runs before anything else that reads scroll position.
 (function restorePipScroll() {
   const saved = sessionStorage.getItem("pipScrollRestore");
   if (saved === null) return;
@@ -12,43 +10,9 @@
   }
 })();
 
-function openLightbox(src, alt) {
-  const lightbox = document.getElementById("lightbox");
-  const img = document.getElementById("lightbox-img");
-  if (!lightbox || !img) return;
-  img.src = src;
-  img.alt = alt || "";
-  lightbox.classList.add("active");
-  document.body.style.overflow = "hidden";
-}
-
-function closeLightbox() {
-  const lightbox = document.getElementById("lightbox");
-  if (!lightbox) return;
-  lightbox.classList.remove("active");
-  document.body.style.overflow = "";
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll(".project-image").forEach((img) => {
-    img.addEventListener("click", () => openLightbox(img.src, img.alt));
-  });
-});
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeLightbox();
-});
-
-// Fade content based on where its CENTER sits: if the center is anywhere in
-// the middle 70% of the viewport, it's fully opaque, no matter how tall the
-// element is or whether its edges poke into the top/bottom bands. Only once
-// an element's center itself drifts into the top/bottom 15% does it start
-// fading. Also suppressed near the very start/end of the page - if there's
-// no more room to scroll in a direction, nothing is actually being hidden
-// that way, so don't fade it (otherwise content would stay permanently
-// translucent while scrolled all the way up or down).
+// Scroll fade: content fades out near the top/bottom edges of the viewport.
 const MIN_OPACITY = 0.15;
-const FADE_ZONE_FRACTION = 0.20;
+const FADE_ZONE_FRACTION = 0.2;
 let fadeItems = [];
 let fadeTicking = false;
 
@@ -105,8 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener("resize", requestFadeUpdate, { passive: true });
 });
 
-// Immersive "explore space" mode: hides the page UI so the star field behind
-// it is unobstructed, and lets stars.js switch the camera into free-fly mode.
+// Immersive "explore space" mode: hides the page UI and lets space.js
+// build and run the 3D scene with the controllable astronaut.
 window.__immersiveMode = false;
 
 function setImmersiveMode(active) {
@@ -114,20 +78,13 @@ function setImmersiveMode(active) {
   window.__immersiveMode = active;
 
   const btn = document.getElementById("space-toggle");
-  if (btn) {
-    btn.setAttribute("aria-pressed", String(active));
-    btn.classList.toggle("active", active);
-    const text = active ? "Exit space" : "Explore space";
-    btn.setAttribute("aria-label", text);
-    btn.title = text;
-  }
+  if (btn) btn.classList.toggle("active", active);
 
   window.dispatchEvent(
     new CustomEvent("spacemodechange", { detail: { active } }),
   );
 
-  // Keep the PiP mirror's UI state in sync too (same-origin, so we can call
-  // straight into it).
+  // Keep the PiP mirror's UI state in sync too.
   const pipWin = getPipWindow();
   if (pipWin && typeof pipWin.setImmersiveMode === "function") {
     pipWin.setImmersiveMode(active);
@@ -149,29 +106,19 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// ===== Picture-in-picture mirror (floating dropdown, chevron toggle) =====
-// The PiP frame is a same-origin iframe pointed at this very page, so it's a
-// genuine live second copy of the site. Clicking the chevron opens it as a
-// floating panel under the header (not part of the header's own box). It
-// loads lazily - only once first opened - since eagerly running a whole
-// second copy of the starfield/Three.js scene in the background at all
-// times was the main source of lag. We forward this page's scroll position,
-// pointer position, and explore-mode state into it live so it visually
-// reacts to what's happening on the main page instead of sitting static.
-//
-// Clicking the frame itself FLIP-animates it out to fullscreen and hands
-// off interaction to the mirror directly (it's already fully loaded, so
-// there's no reload needed). Each mirror can load a mirror of itself too,
-// so zooming in feels like an endless loop.
-const PIP_DISPLAY_WIDTH_MAX = 340; // panel's on-screen width in CSS px, capped on narrow screens
-const PIP_DISPLAY_WIDTH_MAX_MOBILE = 170; // smaller cap on phone-size screens
-const PIP_MOBILE_BREAKPOINT = 800; // matches the site's existing mobile breakpoint
-const MAX_MIRROR_DEPTH = 25; // defensive ceiling only, not a practical limit
+// Picture-in-picture mirror: a same-origin iframe of this page, opened as a
+// floating panel from the header chevron. Loads lazily since running a
+// second copy of the Three.js scene at all times was the main source of lag.
+// Clicking the frame zooms it to fullscreen and hands off interaction to it.
+const PIP_DISPLAY_WIDTH_MAX = 340;
+const PIP_DISPLAY_WIDTH_MAX_MOBILE = 170;
+const PIP_MOBILE_BREAKPOINT = 800;
+const MAX_MIRROR_DEPTH = 25; // defensive ceiling, not a practical limit
 const mirrorParams = new URLSearchParams(window.location.search);
 const mirrorDepth = parseInt(mirrorParams.get("pipDepth") || "0", 10);
 let pipIframeReady = false;
-let pipActivated = false; // true once the mirror has been zoomed into fullscreen
-let pipOpen = false; // true while the floating panel is open
+let pipActivated = false;
+let pipOpen = false;
 
 function getPipWindow() {
   const pipIframe = document.getElementById("pip-iframe");
@@ -203,8 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const pipIframe = document.getElementById("pip-iframe");
   if (!pipToggleBtn || !pipPanel || !pipFrame || !pipIframe) return;
 
-  // Safety valve only - in practice this is never reached, since a mirror
-  // only loads one level deeper than wherever it itself was loaded.
   if (mirrorDepth >= MAX_MIRROR_DEPTH) {
     pipToggleBtn.remove();
     pipPanel.remove();
@@ -237,8 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (pipOpen) return;
     pipOpen = true;
     pipToggleBtn.classList.add("active");
-    pipToggleBtn.setAttribute("aria-pressed", "true");
-    pipToggleBtn.setAttribute("aria-expanded", "true");
     pipPanel.hidden = false;
     loadPipMirror();
     applyPipFrameSizing();
@@ -249,8 +192,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!pipOpen) return;
     pipOpen = false;
     pipToggleBtn.classList.remove("active");
-    pipToggleBtn.setAttribute("aria-pressed", "false");
-    pipToggleBtn.setAttribute("aria-expanded", "false");
     pipPanel.hidden = true;
   }
 
@@ -279,11 +220,9 @@ document.addEventListener("DOMContentLoaded", () => {
     applyPipFrameSizing();
   });
 
-  // Activating the PiP (click or Enter/Space, since it's a role="button"
-  // div): the FLIP-animate-and-hand-off-to-the-iframe approach used to live
-  // here, but it broke on mobile. Simpler and reliable everywhere: save the
-  // scroll position, then just reload the real page - restorePipScroll (top
-  // of this file) puts the scroll position back once the fresh page loads.
+  // Reload the real page instead of animating in place, since the FLIP
+  // animate-and-hand-off approach broke on mobile. restorePipScroll (top of
+  // this file) puts the scroll position back once the fresh page loads.
   const activatePip = () => {
     pipActivated = true;
     sessionStorage.setItem("pipScrollRestore", String(window.scrollY));
@@ -307,87 +246,10 @@ window.addEventListener(
   "pointermove",
   (e) => {
     const win = getPipWindow();
-    if (!pipIframeReady || !win || !win.__starsMirror) return;
+    if (!pipIframeReady || !win || !win.__spaceMirror) return;
     const nx = (e.clientX / window.innerWidth) * 2 - 1;
     const ny = -((e.clientY / window.innerHeight) * 2 - 1);
-    win.__starsMirror.setPointer(nx, ny);
-  },
-  { passive: true },
-);
-
-// ===== "This Portfolio Website" project card thumbnail =====
-// Its "screenshot" is a live iframe of this very page, sized to the real
-// viewport and scaled down (via transform) to fit the small thumbnail box -
-// same trick as the header PiP mirror, just non-interactive and always
-// visible instead of tucked behind a dropdown. Same live-reactivity too:
-// forward this page's scroll position and pointer position into it so it
-// actually moves/reacts instead of sitting static.
-let siteFrameReady = false;
-
-function getSiteFrameWindow() {
-  const iframe = document.getElementById("site-frame-iframe");
-  return iframe ? iframe.contentWindow : null;
-}
-
-function updateSiteFrameSizing() {
-  const box = document.getElementById("site-frame-box");
-  const iframe = document.getElementById("site-frame-iframe");
-  if (!box || !iframe) return;
-
-  const rect = box.getBoundingClientRect();
-  if (rect.width === 0) return;
-
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  const scale = rect.width / w;
-
-  iframe.style.width = `${w}px`;
-  iframe.style.height = `${h}px`;
-  iframe.style.transform = `scale(${scale})`;
-}
-
-function syncSiteFrameScroll() {
-  const win = getSiteFrameWindow();
-  if (!siteFrameReady || !win) return;
-  win.scrollTo(0, window.scrollY);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const box = document.getElementById("site-frame-box");
-  const iframe = document.getElementById("site-frame-iframe");
-  if (!box || !iframe) return;
-
-  // Same depth cap as the header PiP mirror - without this, every nested
-  // mirror's own project card would eagerly spawn yet another full copy of
-  // the site (with its own WebGL scene) forever, with nothing to stop it.
-  if (mirrorDepth >= MAX_MIRROR_DEPTH) {
-    box.remove();
-    return;
-  }
-
-  updateSiteFrameSizing();
-  iframe.addEventListener("load", () => {
-    siteFrameReady = true;
-    updateSiteFrameSizing();
-    syncSiteFrameScroll();
-  });
-  iframe.src = `./index.html?pipDepth=${mirrorDepth + 1}`;
-});
-
-window.addEventListener("resize", () => {
-  updateSiteFrameSizing();
-  syncSiteFrameScroll();
-});
-window.addEventListener("scroll", syncSiteFrameScroll, { passive: true });
-
-window.addEventListener(
-  "pointermove",
-  (e) => {
-    const win = getSiteFrameWindow();
-    if (!siteFrameReady || !win || !win.__starsMirror) return;
-    const nx = (e.clientX / window.innerWidth) * 2 - 1;
-    const ny = -((e.clientY / window.innerHeight) * 2 - 1);
-    win.__starsMirror.setPointer(nx, ny);
+    win.__spaceMirror.setPointer(nx, ny);
   },
   { passive: true },
 );

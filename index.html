@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   </head>
   <body>
-    <div id="star-container"></div>
+    <div id="space-container"></div>
     <header class="site-header">
       <div class="contact-icons">
         <a
@@ -36,31 +36,11 @@
           />
         </a>
       </div>
-      <button
-        id="space-toggle"
-        class="space-toggle-btn"
-        type="button"
-        aria-pressed="false"
-        aria-label="Explore space"
-        title="Explore space"
-      >
-        <img
-          src="./images/astronaut2.png"
-          alt=""
-          class="space-toggle-icon"
-        />
+      <button id="space-toggle" class="space-toggle-btn" type="button">
+        <img src="./images/astronaut.png" alt="" class="space-toggle-icon" />
       </button>
-      <div class="pip-divider" aria-hidden="true"></div>
-      <button
-        id="pip-toggle"
-        class="pip-toggle-btn"
-        type="button"
-        aria-pressed="false"
-        aria-expanded="false"
-        aria-controls="pip-panel"
-        aria-label="Live preview"
-        title="Live preview"
-      >
+      <div class="pip-divider"></div>
+      <button id="pip-toggle" class="pip-toggle-btn" type="button">
         <svg
           class="pip-toggle-icon"
           viewBox="0 0 24 24"
@@ -69,25 +49,13 @@
           stroke-width="2.5"
           stroke-linecap="round"
           stroke-linejoin="round"
-          aria-hidden="true"
         >
           <polyline points="6 9 12 15 18 9"></polyline>
         </svg>
       </button>
       <div id="pip-panel" class="pip-panel" hidden>
-        <div
-          id="pip-frame"
-          class="pip-frame"
-          role="button"
-          tabindex="0"
-          aria-label="Zoom into the mirrored site"
-          title="Zoom in"
-        >
-          <iframe
-            id="pip-iframe"
-            title="Live mirror of this site"
-            tabindex="-1"
-          ></iframe>
+        <div id="pip-frame" class="pip-frame" role="button" tabindex="0">
+          <iframe id="pip-iframe" tabindex="-1"></iframe>
         </div>
       </div>
     </header>
@@ -116,18 +84,7 @@
             </div>
             <div class="project-content">
               <h3>OpenEye</h3>
-              <p>
-                Real-time object detection using the YOLOv8 computer vision
-                model, combined with OpenCV live video capture to visualize
-                detected objects with confidence scores.
-              </p>
-              <!--
-              <ul class="tech-list" aria-label="tech used">
-                <li class="tech-pill">Python</li>
-                <li class="tech-pill">OpenCV</li>
-                <li class="tech-pill">YOLOv8</li>
-              </ul>
-              -->
+              <p>Real-time object detection and identification.</p>
             </div>
           </div>
           <div class="project-card">
@@ -140,53 +97,12 @@
             </div>
             <div class="project-content">
               <h3>WAVy</h3>
-              <p>
-                A desktop app that separates songs into individual instrument
-                stems, detects BPM and key, and applies professional-grade
-                mastering. Built with Electron + React for the UI and Python for
-                audio processing. Everything runs offline, and your library
-                syncs to the cloud.
-              </p>
-              <!--
-              <ul class="tech-list" aria-label="tech used">
-                <li class="tech-pill">HTML</li>
-                <li class="tech-pill">CSS</li>
-                <li class="tech-pill">JavaScript</li>
-                <li class="tech-pill">PHP</li>
-                <li class="tech-pill">SQL</li>
-              </ul>
-              -->
+              <p>App with stem separation and mastering tools.</p>
             </div>
           </div>
-          <!--
-          <div class="project-card">
-            <div id="site-frame-box" class="project-site-frame">
-              <iframe
-                id="site-frame-iframe"
-                title="Live preview of this website"
-                tabindex="-1"
-              ></iframe>
-            </div>
-            <div class="project-content">
-              <h3>This Website</h3>
-              <p>
-                Description
-              </p>
-              <ul class="tech-list" aria-label="tech used">
-                <li class="tech-pill">HTML</li>
-                <li class="tech-pill">CSS</li>
-                <li class="tech-pill">JavaScript</li>
-                <li class="tech-pill">Three.js</li>
-              </ul>
-            </div>
-          </div>
-          -->
         </div>
       </section>
     </main>
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
-      <img id="lightbox-img" src="" alt="" />
-    </div>
-    <script src="./stars.js" defer></script>
+    <script src="./space.js" defer></script>
   </body>
 </html>

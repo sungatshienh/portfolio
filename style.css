@@ -1,3 +1,4 @@
+/* Reset */
 *,
 *::before,
 *::after {
@@ -6,6 +7,7 @@
   padding: 0;
 }
 
+/* Fonts */
 @font-face {
   font-family: "Asimovian-Regular";
   src: url("fonts/Asimovian-Regular.ttf") format("truetype");
@@ -14,11 +16,153 @@
   font-display: swap;
 }
 
-#star-container {
+/* Theme */
+:root {
+  --page-bg: #000000;
+  --text-color: #fcf9ee;
+  --card-bg: rgba(33, 33, 33, 0.4);
+  --card-border: rgba(255, 255, 255, 0.14);
+}
+
+/* Base */
+html {
+  scroll-behavior: smooth;
+  background-color: var(--page-bg);
+  background-image: url("./images/space3.jpg");
+  background-repeat: repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  min-height: 100vh;
+}
+
+body {
+  min-height: 100dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: "Asimovian-Regular", sans-serif;
+  font-size: 24px;
+  color: var(--text-color);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+body::after {
+  content: "";
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: -2;
   pointer-events: none;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 24px 10%;
+  transition: opacity 0.4s ease;
+}
+
+section {
+  margin-bottom: 10px;
+  padding: 4px 0;
+  flex-shrink: 0;
+  text-align: left;
+}
+
+section p {
+  margin-bottom: 0;
+}
+
+h2 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgb(200, 200, 200);
+}
+
+p {
+  margin: 0 0 4px 0;
+  font-size: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.scroll-fade {
+  transition: opacity 0.15s linear;
+  will-change: opacity;
+}
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: 12px;
+  z-index: 50;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 10px;
+  margin-top: 16px;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 15px;
+  background-color: rgba(20, 20, 24, 0.78);
+  backdrop-filter: blur(4px) saturate(130%);
+  -webkit-backdrop-filter: blur(4px) saturate(130%);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  animation: header-pulse 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes header-pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.025);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-header {
+    animation: none;
+  }
+}
+
+.contact-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  max-width: 200px;
+  transition:
+    opacity 0.4s ease,
+    max-width 0.4s ease;
+}
+
+.linkedin-logo,
+.github-logo {
+  display: block;
+  width: 35px;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.github-logo {
+  margin-left: 8px;
+}
+
+.linkedin-logo:hover,
+.github-logo:hover {
+  transform: scale(1.2);
 }
 
 .space-toggle-btn {
@@ -57,38 +201,6 @@
   filter: drop-shadow(0 0 6px rgba(120, 180, 255, 0.9));
 }
 
-body.immersive-mode {
-  overflow: hidden;
-}
-
-.contact-icons {
-  overflow: hidden;
-  max-width: 200px;
-  transition:
-    opacity 0.4s ease,
-    max-width 0.4s ease;
-}
-
-main {
-  transition: opacity 0.4s ease;
-}
-
-body.immersive-mode .contact-icons {
-  opacity: 0;
-  max-width: 0;
-  pointer-events: none;
-}
-
-body.immersive-mode .space-toggle-btn {
-  margin-left: 0;
-}
-
-body.immersive-mode main,
-body.immersive-mode .lightbox {
-  opacity: 0;
-  pointer-events: none;
-}
-
 .pip-divider {
   width: 1px;
   height: 20px;
@@ -98,11 +210,6 @@ body.immersive-mode .lightbox {
   transition:
     opacity 0.4s ease,
     margin-left 0.4s ease;
-}
-
-body.immersive-mode .pip-divider {
-  opacity: 0;
-  margin-left: 0;
 }
 
 .pip-toggle-btn {
@@ -128,13 +235,6 @@ body.immersive-mode .pip-divider {
     opacity 0.4s ease;
 }
 
-body.immersive-mode .pip-toggle-btn {
-  opacity: 0;
-  max-width: 0;
-  margin-left: 0;
-  pointer-events: none;
-}
-
 .pip-toggle-icon {
   width: 20px;
   height: 20px;
@@ -150,11 +250,7 @@ body.immersive-mode .pip-toggle-btn {
   transform: rotate(180deg);
 }
 
-/* Floats below the header as its own overlay (not part of the header's own
-   box), matching where it always used to live - toggled via the [hidden]
-   attribute. Loads lazily (only once first opened) since eagerly running a
-   whole second copy of the starfield/Three.js scene in the background at
-   all times was the main source of lag. */
+/* Picture-in-picture */
 .pip-panel {
   position: absolute;
   top: calc(100% + 12px);
@@ -197,13 +293,6 @@ body.immersive-mode .pip-toggle-btn {
   box-shadow: 0 0 0 1px rgba(120, 180, 255, 0.6);
 }
 
-/* The iframe is sized (via JS) to match the real browser viewport exactly,
-   so the mirrored page lays out identically (same responsive breakpoints,
-   same content) to the main page, then scaled down with a transform to fit
-   the frame - that's what keeps it a true "mini version" of the live site
-   instead of a distorted or mismatched crop. Its transform transitions on
-   the same schedule as the frame's width/height, so the mirrored page
-   scales up in lockstep as the frame grows to fullscreen. */
 .pip-frame iframe {
   display: block;
   border: none;
@@ -229,107 +318,65 @@ body.pip-zooming > *:not(.pip-frame) {
   pointer-events: none;
 }
 
-:root {
-  --page-bg: #000000;
-  --text-color: #fcf9ee;
-  --card-bg: rgba(33, 33, 33, 0.4);
-  --card-border: rgba(255, 255, 255, 0.14);
-}
-
-html {
-  scroll-behavior: smooth;
-  background-color: var(--page-bg);
-  background-image: url("./images/space3.jpg");
-  background-repeat: repeat;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  min-height: 100vh;
-}
-
-body {
-  min-height: 100dvh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  font-family: "Asimovian-Regular", sans-serif;
-  font-size: 24px;
-  color: var(--text-color);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-}
-
-body::after {
-  content: "";
+/* Space mode */
+#space-container {
+  display: none;
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
 }
 
-.scroll-fade {
-  transition: opacity 0.15s linear;
-  will-change: opacity;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.4s ease;
 }
 
-h2 {
-  margin: 0 0 4px 0;
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  /* A color-based gray instead of opacity: the scroll-fade script applies
-     its own dynamic opacity directly to some elements (like #projects > h2)
-     and to ancestor sections for others (About Me/Hobbies) - if this dimming
-     were also done via opacity, whichever element gets the inline override
-     would lose it while sections-with-h2-children keep multiplying it in,
-     making headers look inconsistently gray depending on which one got
-     targeted. Color isn't touched by that mechanism, so it stays consistent
-     everywhere regardless of fade state. */
-  color: rgba(252, 249, 238, 0.6);
+body.immersive-mode::before {
+  background: rgba(0, 0, 0, 1);
 }
 
-p {
-  margin: 0 0 4px 0;
-  font-size: 20px;
+body.immersive-mode {
+  overflow: hidden;
 }
 
-a {
-  text-decoration: none;
+body.immersive-mode .contact-icons {
+  opacity: 0;
+  max-width: 0;
+  pointer-events: none;
 }
 
-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding: 24px 10%;
+body.immersive-mode .space-toggle-btn {
+  margin-left: 0;
 }
 
-section {
-  margin-bottom: 10px;
-  padding: 4px 0;
-  flex-shrink: 0;
-  text-align: left;
+body.immersive-mode main {
+  opacity: 0;
+  pointer-events: none;
 }
 
-section p {
-  margin-bottom: 0;
+body.immersive-mode .pip-divider {
+  opacity: 0;
+  margin-left: 0;
 }
 
+body.immersive-mode .pip-toggle-btn {
+  opacity: 0;
+  max-width: 0;
+  margin-left: 0;
+  pointer-events: none;
+}
+
+/* Projects */
 .project-list {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 4px;
   margin-top: 6px;
   max-width: 1200px;
 }
@@ -340,41 +387,18 @@ section p {
   align-items: center;
   gap: 16px;
   min-width: 0;
-  overflow: hidden;
   padding: 12px;
-  border: 2px solid var(--card-border);
-  border-radius: 15px;
-  background-color: var(--card-bg);
-  backdrop-filter: blur(5px) saturate(130%);
-  -webkit-backdrop-filter: blur(5px) saturate(130%);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+  transition: transform 0.3s ease;
 }
 
 .project-card:hover {
-  transform: scale(1.01);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.3);
+  transform: scale(1.02);
 }
 
-/* Screenshot thumbnail - fixed width, always 16:9, never deformed
-   (object-fit:cover crops instead of stretching). */
-.project-image {
-  flex-shrink: 0;
-  width: 160px;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  display: block;
-  border-radius: 10px;
-}
-
-/* App icon box - a fixed square (icons are square, not 16:9 screenshots;
-   forcing that ratio would either crop or pad them oddly). */
 .project-icon-box {
   flex-shrink: 0;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -386,24 +410,6 @@ section p {
   height: auto;
   object-fit: contain;
   display: block;
-}
-
-/* A live iframe of this very site, scaled down (via JS) to fit this box -
-   the "screenshot" for this project card is genuinely the live page. */
-.project-site-frame {
-  flex-shrink: 0;
-  width: 160px;
-  aspect-ratio: 16 / 9;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #000;
-}
-
-.project-site-frame iframe {
-  display: block;
-  border: none;
-  pointer-events: none;
-  transform-origin: top left;
 }
 
 .project-content {
@@ -420,184 +426,13 @@ section p {
   font-size: 70%;
 }
 
-/* Collapsed by default - clicking the card's icon/image (see scripts.js)
-   toggles .expanded on the card, sliding the description open instead of
-   always showing it. */
 .project-card p {
   margin: 0;
   font-size: 50%;
-  color: rgba(252, 249, 238, 0.6);
+  color: rgb(200, 200, 200);
 }
 
-/* Covers the whole card and is invisible/inert until hovered, at which
-   point it dims the card with a translucent gray layer and reveals a big
-   centered redirect arrow - pointer-events stay off while hidden so the
-   card underneath (and its own :hover) keeps working normally; enabling
-   pointer-events only once revealed is what lets clicking anywhere on the
-   card navigate, without blocking hover detection on the way in. */
-.project-link {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: inherit;
-  background-color: rgba(20, 20, 20, 0);
-  color: var(--text-color);
-  opacity: 0;
-  pointer-events: none;
-  transition:
-    opacity 0.25s ease,
-    background-color 0.25s ease;
-}
-
-.project-card:hover .project-link {
-  opacity: 1;
-  pointer-events: auto;
-  background-color: rgba(20, 20, 20, 0.55);
-}
-
-.project-link:hover {
-  background-color: rgba(20, 20, 20, 0.7);
-}
-
-.project-link-icon {
-  width: 52px;
-  height: 52px;
-  object-fit: contain;
-  display: block;
-  transform: scale(0.7);
-  transition: transform 0.25s ease;
-}
-
-.project-card:hover .project-link-icon {
-  transform: scale(1);
-}
-
-.project-link:hover .project-link-icon {
-  transform: scale(1.1);
-}
-
-.tech-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(3px, 1.5cqw, 5px);
-  /* Pushes the pills to the bottom of .project-content (which now fills the
-     card's remaining height), so they line up at the same spot across every
-     card regardless of description length. */
-  margin: auto 0 0;
-  padding: 0;
-  /* Reserve room so pills don't wrap under the GitHub badge in the
-     card's bottom-right corner. */
-  padding-right: 40px;
-  list-style: none;
-  min-width: 0;
-}
-
-.tech-pill {
-  display: inline-flex;
-  align-items: center;
-  flex: 0 1 auto;
-  white-space: nowrap;
-  padding: clamp(2px, 1.2cqw, 4px) clamp(4px, 2.6cqw, 8px);
-  border-radius: 7px;
-  font-size: clamp(7px, 3cqw, 10px);
-  line-height: 1;
-  color: var(--text-color);
-  border: 1px solid color-mix(in srgb, #ffffff 45%, var(--card-bg));
-}
-
-.site-header {
-  position: sticky;
-  top: 12px;
-  z-index: 50;
-  align-self: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 6px 10px;
-  margin-top: 16px;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  border-radius: 15px;
-  background-color: rgba(20, 20, 24, 0.78);
-  backdrop-filter: blur(4px) saturate(130%);
-  -webkit-backdrop-filter: blur(4px) saturate(130%);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-  animation: header-pulse 2.4s ease-in-out infinite alternate;
-}
-
-@keyframes header-pulse {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.025);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .site-header {
-    animation: none;
-  }
-}
-
-.contact-icons {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.linkedin-logo,
-.github-logo {
-  display: block;
-  width: 35px;
-  height: auto;
-  transition: transform 0.3s ease;
-}
-
-.github-logo {
-  margin-left: 8px;
-}
-
-.linkedin-logo:hover,
-.github-logo:hover {
-  transform: scale(1.2);
-}
-
-.lightbox {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  background: rgba(0, 0, 0, 0.85);
-  cursor: zoom-out;
-  animation: lightbox-fade 0.2s ease;
-}
-
-.lightbox.active {
-  display: flex;
-}
-
-.lightbox img {
-  max-width: 92%;
-  max-height: 92%;
-  object-fit: contain;
-  border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-}
-
-@keyframes lightbox-fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
+/* Responsive */
 @media (max-width: 800px) {
   main {
     margin: 12px auto;
@@ -617,51 +452,12 @@ section p {
   }
 
   .project-list {
-    gap: 10px;
+    gap: 2px;
   }
 
   .project-card {
     padding: 8px;
     gap: 10px;
-  }
-
-  .project-image,
-  .project-site-frame {
-    width: 90px;
-  }
-
-  .project-icon-box {
-    width: 100px;
-    height: 100px;
-  }
-
-  /* Touch devices don't really support :hover, so the full-card gray
-     reveal (desktop) doesn't translate - permanently graying out every
-     card with no hover to justify it would be worse, not better. Instead,
-     shrink it back down to a small always-visible corner tap target. */
-  .project-link {
-    inset: auto 10px 10px auto;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background-color: var(--card-bg);
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  .project-link-icon {
-    width: 22px;
-    height: 22px;
-    transform: none;
-  }
-
-  .tech-list {
-    padding-right: 30px;
-  }
-
-  .tech-pill {
-    font-size: clamp(11px, 3.5cqw, 14px);
-    padding: clamp(3px, 1.4cqw, 6px) clamp(6px, 3cqw, 11px);
   }
 }
 
