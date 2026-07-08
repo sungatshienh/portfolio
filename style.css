@@ -86,11 +86,6 @@ section {
 
 section p {
   margin-bottom: 0;
-  transition: transform 0.3s ease;
-}
-
-section:hover {
-  transform: scale(1.01);
 }
 
 h2 {
@@ -441,12 +436,9 @@ body.immersive-mode .pip-toggle-btn {
     font-size: 20px;
   }
 
-  .project-list {
-    gap: 2px;
-  }
-
   .project-card {
-    padding: 8px;
+    padding-top: 10px;
+    padding-bottom: 2px;
     gap: 10px;
   }
 }
