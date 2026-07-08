@@ -62,8 +62,6 @@ body::after {
   inset: 0;
   z-index: -2;
   pointer-events: none;
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
 }
 
 main {
