@@ -10,21 +10,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   </head>
   <body>
+    <svg class="glass-filter-defs" aria-hidden="true" focusable="false">
+      <filter
+        id="liquid-glass-distortion"
+        x="-20%"
+        y="-20%"
+        width="140%"
+        height="140%"
+      >
+        <feTurbulence
+          type="fractalNoise"
+          baseFrequency="0.008 0.012"
+          numOctaves="2"
+          seed="7"
+          result="noise"
+        />
+        <feGaussianBlur in="noise" stdDeviation="3" result="blurredNoise" />
+        <feDisplacementMap
+          in="SourceGraphic"
+          in2="blurredNoise"
+          scale="45"
+          xChannelSelector="R"
+          yChannelSelector="G"
+        />
+      </filter>
+    </svg>
     <div id="space-container"></div>
     <header class="site-header">
-      <a href="index.html" class="back-btn" aria-label="Back to home">
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <polyline points="15 18 9 12 15 6"></polyline>
-        </svg>
-      </a>
-      <div class="header-divider back-divider"></div>
       <div class="contact-icons">
         <a
           href="https://www.linkedin.com/in/sungat"
@@ -74,27 +86,15 @@
         </div>
       </div>
     </header>
-    <main id="main-content">
-      <section
-        id="about-me"
-        class="expand-frame"
-        role="button"
-        tabindex="0"
-        data-href="about.html"
-      >
+    <main>
+      <section id="about-me">
         <h2>About Me</h2>
         <p>
           I'm Sungat, a student at the University of Michigan studying Computer
           Science.
         </p>
       </section>
-      <section
-        id="projects"
-        class="expand-frame"
-        role="button"
-        tabindex="0"
-        data-href="projects.html"
-      >
+      <section id="projects">
         <h2>Projects</h2>
         <div class="project-list">
           <div class="project-card">
