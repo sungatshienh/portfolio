@@ -36,6 +36,24 @@
       </filter>
     </svg>
     <div id="space-container"></div>
+    <div class="starfield" aria-hidden="true"></div>
+    <script>
+      // Scatter twinkling sparkle-stars across the fixed background layer.
+      (function () {
+        var field = document.querySelector(".starfield");
+        if (!field) return;
+        var COUNT = 60;
+        for (var i = 0; i < COUNT; i++) {
+          var s = document.createElement("span");
+          s.className = "star-sparkle";
+          s.style.left = Math.random() * 100 + "vw";
+          s.style.top = Math.random() * 100 + "vh";
+          s.style.setProperty("--dur", (2 + Math.random() * 3).toFixed(2) + "s");
+          s.style.setProperty("--delay", (Math.random() * 4).toFixed(2) + "s");
+          field.appendChild(s);
+        }
+      })();
+    </script>
     <header class="site-header">
       <div class="contact-icons">
         <a
@@ -109,8 +127,9 @@
               <h3>OpenEye</h3>
               <p>Real-time object detection and identification.</p>
             </div>
+            <span class="project-arrow" aria-hidden="true">&#8599;</span>
           </div>
-          <div class="project-card" href="https://sungatshienh.github.io/WAVy">
+          <a class="project-card" href="https://sungatshienh.github.io/WAVy/" target="_blank" rel="noopener noreferrer">
             <div class="project-icon-box">
               <img
                 src="./images/WAVy-icon.png"
@@ -122,7 +141,8 @@
               <h3>WAVy</h3>
               <p>App with stem separation and mastering tools.</p>
             </div>
-          </div>
+            <span class="project-arrow" aria-hidden="true">&#8599;</span>
+          </a>
         </div>
       </section>
     </main>
