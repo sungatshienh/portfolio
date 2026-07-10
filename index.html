@@ -48,7 +48,10 @@
           s.className = "star-sparkle";
           s.style.left = Math.random() * 100 + "vw";
           s.style.top = Math.random() * 100 + "vh";
-          s.style.setProperty("--dur", (2 + Math.random() * 3).toFixed(2) + "s");
+          s.style.setProperty(
+            "--dur",
+            (2 + Math.random() * 3).toFixed(2) + "s",
+          );
           s.style.setProperty("--delay", (Math.random() * 4).toFixed(2) + "s");
           field.appendChild(s);
         }
@@ -110,7 +113,53 @@
         <p>
           I'm Sungat, a student at the University of Michigan studying Computer
           Science.
+          <br /><br />
+          I enjoy building software and exploring new technologies. My interests
+          include computer vision, machine learning, and web development.
+          <br /><br />
+          In my free time, I like to
+          <br /><br />
+          &emsp;Dance:
+          <br /><br />
         </p>
+        <div class="video-gallery">
+          <div class="video-frame">
+            <iframe
+              src="https://www.youtube.com/embed/e5WOUGU7iWo?si=gaD5gHUUR1kk1uIX"
+              title="Bhangra performance"
+              loading="lazy"
+              allow="
+                accelerometer;
+                autoplay;
+                clipboard-write;
+                encrypted-media;
+                gyroscope;
+                picture-in-picture;
+                web-share;
+              "
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="video-frame">
+            <iframe
+              src="https://www.youtube.com/embed/hj3eW48Pnn4?si=btvzaW1pynICvp7o"
+              title="Bhangra performance"
+              loading="lazy"
+              allow="
+                accelerometer;
+                autoplay;
+                clipboard-write;
+                encrypted-media;
+                gyroscope;
+                picture-in-picture;
+                web-share;
+              "
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
       </section>
       <section id="projects">
         <h2>Projects</h2>
@@ -129,7 +178,12 @@
             </div>
             <span class="project-arrow" aria-hidden="true">&#8599;</span>
           </div>
-          <a class="project-card" href="https://sungatshienh.github.io/WAVy/" target="_blank" rel="noopener noreferrer">
+          <a
+            class="project-card"
+            href="https://sungatshienh.github.io/WAVy/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <div class="project-icon-box">
               <img
                 src="./images/WAVy-icon.png"

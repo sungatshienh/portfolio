@@ -555,6 +555,53 @@ body.immersive-mode .pip-toggle-btn {
   color: rgb(255, 255, 255);
 }
 
+/* Dance video gallery */
+.dance-style {
+  margin-top: 18px;
+}
+
+.dance-style-title {
+  margin: 0 0 12px 0;
+  padding-left: 2px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-color);
+}
+
+.video-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 0 0 1px var(--card-border);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.video-frame:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 1px rgba(120, 180, 255, 0.6);
+}
+
+.video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
 /* Responsive */
 @media (max-width: 800px) {
   h2 {
