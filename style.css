@@ -151,7 +151,7 @@ main {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 24px 10%;
+  padding: 24px 10% 180px;
   transition: opacity 0.4s ease;
 }
 
@@ -214,6 +214,17 @@ h2 {
   color: rgb(255, 255, 255);
 }
 
+/* Main section headers get a divider so sub-headers (e.g. Bhangra) don't
+   read as being on the same level. Negative side margins overshoot the
+   section's padding; the section's overflow:hidden clips the underline to the
+   rounded box so it meets the side borders cleanly. Padding matches the margin
+   so the heading text doesn't move. */
+section > h2 {
+  margin: 0 -24px 16px -24px;
+  padding: 0 24px 12px 24px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
 p {
   margin: 0 0 4px 0;
   font-size: 20px;
@@ -238,7 +249,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 20px;
+  padding: 12px 28px;
   margin-top: auto;
   margin-bottom: 16px;
   border: 2px solid rgba(255, 255, 255, 0.3);
@@ -309,7 +320,7 @@ a {
 .header-divider {
   width: 2px;
   height: 50px;
-  margin: 0 15px;
+  margin: 0 28px;
   background: rgba(255, 255, 255, 0.25);
   flex-shrink: 0;
   transition:
@@ -329,7 +340,7 @@ a {
   background: transparent;
   color: var(--text-color);
   cursor: pointer;
-  overflow: hidden;
+  overflow: visible;
   max-width: 60px;
   transition:
     transform 0.3s ease,
@@ -339,18 +350,40 @@ a {
 }
 
 .pip-toggle-icon {
-  width: 32px;
-  height: 32px;
+  width: 52px;
+  height: 52px;
   display: block;
-  transition: transform 0.35s ease;
+  object-fit: contain;
+  transition: filter 0.25s ease;
+}
+
+/* Faint red glow on hover; the pulse below takes over once enabled. The glow
+   is a drop-shadow on the image so it hugs the button's actual shape rather
+   than ringing the larger circular button box. */
+.pip-toggle-btn:hover .pip-toggle-icon {
+  filter: drop-shadow(0 0 6px rgba(255, 40, 40, 0.9))
+    drop-shadow(0 0 14px rgba(255, 0, 0, 0.6));
 }
 
 .pip-toggle-btn:hover {
   transform: scale(1.2);
 }
 
+/* When enabled, a soft red aura pulses tightly around the button. */
 .pip-toggle-btn.active .pip-toggle-icon {
-  transform: rotate(180deg);
+  animation: pip-red-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pip-red-pulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 7px rgba(255, 50, 50, 1))
+      drop-shadow(0 0 15px rgba(255, 0, 0, 0.7));
+  }
+  50% {
+    filter: drop-shadow(0 0 13px rgba(255, 70, 70, 1))
+      drop-shadow(0 0 26px rgba(255, 10, 10, 0.9));
+  }
 }
 
 /* Picture-in-picture */
@@ -480,15 +513,13 @@ body.immersive-mode .pip-toggle-btn {
   transform: scale(1.02);
 }
 
-/* Liquid-glass separator: a thin gradient rim between cards that catches
-   light in the middle and fades out at both ends. */
-.project-card:not(:last-child)::after {
-  content: "";
-  position: absolute;
-  left: -20px;
-  right: -20px;
-  bottom: -2px;
+/* Liquid-glass separator: a thin gradient rim that catches light in the
+   middle and fades out at both ends. Its own element so it sits reliably
+   between items on every screen size. */
+.divider {
   height: 2px;
+  border: none;
+  margin: 6px 0;
   background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0) 0%,
@@ -555,30 +586,144 @@ body.immersive-mode .pip-toggle-btn {
   color: rgb(255, 255, 255);
 }
 
-/* Dance video gallery */
-.dance-style {
-  margin-top: 18px;
+/* About Me paragraphs */
+#about-me p {
+  margin-bottom: 16px;
 }
 
-.dance-style-title {
-  margin: 0 0 12px 0;
-  padding-left: 2px;
+#about-me p:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Hobbies */
+.hobbies-title {
+  margin: 16px 0 14px 0;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hobby-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+/* The two buttons sit next to each other in a tight row. */
+.hobby-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Both panels share this area below the buttons, so whichever is open
+   appears in the same spot. Full width for the video wheel / player. */
+.hobby-panels {
+  align-self: stretch;
+  min-width: 0;
+}
+
+/* Hobby dropdown (Bhangra, Mixing, ...) */
+.hobby-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-color);
+  font: inherit;
   font-size: 14px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--text-color);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-.video-gallery {
+.hobby-toggle:hover,
+.hobby-toggle:focus-visible {
+  background: rgba(120, 180, 255, 0.14);
+  border-color: rgba(120, 180, 255, 0.6);
+  box-shadow: 0 0 0 3px rgba(120, 180, 255, 0.15);
+  outline: none;
+}
+
+.hobby-toggle-icon {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s ease;
+}
+
+.hobby-toggle-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.hobby-toggle[aria-expanded="true"] .hobby-toggle-icon {
+  transform: rotate(180deg);
+}
+
+/* Collapsible reveal: animates open/closed via grid-template-rows. */
+.hobby-reveal {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.35s ease,
+    opacity 0.35s ease;
+}
+
+.hobby-reveal.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.hobby-reveal > * {
+  min-height: 0;
+}
+
+/* Bhangra videos: a horizontal scroll wheel so the section stays compact on
+   both mobile and desktop instead of a tall single/multi column. */
+.video-wheel {
+  display: flex;
   gap: 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 2px;
+  padding-bottom: 10px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.35) transparent;
+}
+
+.video-wheel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.video-wheel::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 999px;
+}
+
+.video-wheel::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .video-frame {
   position: relative;
+  flex: 0 0 clamp(260px, 70%, 360px);
   aspect-ratio: 16 / 9;
+  scroll-snap-align: start;
   border-radius: 12px;
   overflow: hidden;
   background: #000;
@@ -589,7 +734,6 @@ body.immersive-mode .pip-toggle-btn {
 }
 
 .video-frame:hover {
-  transform: scale(1.02);
   box-shadow: 0 0 0 1px rgba(120, 180, 255, 0.6);
 }
 
@@ -600,6 +744,31 @@ body.immersive-mode .pip-toggle-btn {
   height: 100%;
   border: none;
   display: block;
+}
+
+/* Mixing: stacked SoundCloud embeds */
+.mixing-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  max-width: 680px;
+  overflow: hidden;
+}
+
+.sc-embed {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px var(--card-border);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* Track player: 166px is SoundCloud's minimum for the artwork player;
+   anything shorter renders blank. */
+.sc-embed-track {
+  height: 166px;
 }
 
 /* Responsive */
@@ -624,7 +793,7 @@ body.immersive-mode .pip-toggle-btn {
 
   .header-divider {
     height: 40px;
-    margin: 0 12px;
+    margin: 0 22px;
   }
 
   .linkedin-logo,

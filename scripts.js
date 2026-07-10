@@ -60,7 +60,7 @@ function requestFadeUpdate() {
 function initScrollFade() {
   fadeItems = Array.from(
     document.querySelectorAll(
-      "main > section:not(#projects), #projects > h2, .project-card",
+      "#about-me > h2, #about-me > p, .hobbies-title, .hobby-toggle, .video-frame, .sc-embed, #projects > h2, .project-card",
     ),
   );
   for (const el of fadeItems) el.classList.add("scroll-fade");
@@ -71,6 +71,47 @@ document.addEventListener("DOMContentLoaded", () => {
   initScrollFade();
   window.addEventListener("scroll", requestFadeUpdate, { passive: true });
   window.addEventListener("resize", requestFadeUpdate, { passive: true });
+});
+
+// Hobby dropdowns (Bhangra, Mixing, ...): the buttons sit in one row and their
+// panels share a spot below, so only one may be open at a time — opening one
+// closes the others. Recompute the scroll-fade once the expand animation
+// settles so the newly shown items get the right opacity for their position.
+document.addEventListener("DOMContentLoaded", () => {
+  const toggles = Array.from(document.querySelectorAll(".hobby-toggle"));
+
+  // Pair each toggle with the reveal panel it controls (via aria-controls).
+  const pairs = toggles
+    .map((toggle) => {
+      const target = document.getElementById(
+        toggle.getAttribute("aria-controls"),
+      );
+      const reveal = target ? target.closest(".hobby-reveal") : null;
+      return reveal ? { toggle, reveal } : null;
+    })
+    .filter(Boolean);
+
+  for (const { toggle, reveal } of pairs) {
+    toggle.addEventListener("click", () => {
+      const willOpen = !reveal.classList.contains("open");
+
+      // Close every panel first so they never clash in the shared spot.
+      for (const other of pairs) {
+        other.reveal.classList.remove("open");
+        other.toggle.setAttribute("aria-expanded", "false");
+      }
+
+      if (willOpen) {
+        reveal.classList.add("open");
+        toggle.setAttribute("aria-expanded", "true");
+      }
+      requestFadeUpdate();
+    });
+
+    reveal.addEventListener("transitionend", (e) => {
+      if (e.propertyName === "grid-template-rows") requestFadeUpdate();
+    });
+  }
 });
 
 // Immersive "explore space" mode: hides the page UI and lets space.js

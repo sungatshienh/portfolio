@@ -89,17 +89,7 @@
       </button>
       <div class="header-divider"></div>
       <button id="pip-toggle" class="pip-toggle-btn" type="button">
-        <svg
-          class="pip-toggle-icon"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <polyline points="6 15 12 9 18 15"></polyline>
-        </svg>
+        <img src="./images/push-button.png" alt="" class="pip-toggle-icon" />
       </button>
       <div id="pip-panel" class="pip-panel" hidden>
         <div id="pip-frame" class="pip-frame" role="button" tabindex="0">
@@ -113,58 +103,250 @@
         <p>
           I'm Sungat, a student at the University of Michigan studying Computer
           Science.
-          <br /><br />
+        </p>
+        <p>
           I enjoy building software and exploring new technologies. My interests
           include computer vision, machine learning, and web development.
-          <br /><br />
-          In my free time, I like to
-          <br /><br />
-          &emsp;Dance:
-          <br /><br />
         </p>
-        <div class="video-gallery">
-          <div class="video-frame">
-            <iframe
-              src="https://www.youtube.com/embed/e5WOUGU7iWo?si=gaD5gHUUR1kk1uIX"
-              title="Bhangra performance"
-              loading="lazy"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-                web-share;
-              "
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
-            ></iframe>
+        <hr class="divider" />
+        <h3 class="hobbies-title">Hobbies</h3>
+        <div class="hobby-list">
+          <div class="hobby-buttons">
+            <button
+              type="button"
+              class="hobby-toggle"
+              aria-expanded="false"
+              aria-controls="bhangra-gallery"
+            >
+              <span class="hobby-toggle-label">Bhangra</span>
+              <span class="hobby-toggle-icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
+            <button
+              type="button"
+              class="hobby-toggle"
+              aria-expanded="false"
+              aria-controls="mixing-content"
+            >
+              <span class="hobby-toggle-label">Mixing</span>
+              <span class="hobby-toggle-icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+            </button>
           </div>
-          <div class="video-frame">
-            <iframe
-              src="https://www.youtube.com/embed/hj3eW48Pnn4?si=btvzaW1pynICvp7o"
-              title="Bhangra performance"
-              loading="lazy"
-              allow="
-                accelerometer;
-                autoplay;
-                clipboard-write;
-                encrypted-media;
-                gyroscope;
-                picture-in-picture;
-                web-share;
-              "
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
-            ></iframe>
+          <div class="hobby-panels">
+            <div class="hobby-reveal">
+              <div class="video-gallery video-wheel" id="bhangra-gallery">
+                <div class="video-frame">
+                  <iframe
+                    src="https://www.youtube.com/embed/Wm430nJYaco?si=ZtaY4UAQAMVVFhHO"
+                    title="Bhangra performance"
+                    loading="lazy"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share;
+                    "
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="video-frame">
+                  <iframe
+                    src="https://www.youtube.com/embed/alRgVVJq7cU?si=8GaODMZGAP-PQm6R"
+                    title="Bhangra performance"
+                    loading="lazy"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share;
+                    "
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="video-frame">
+                  <iframe
+                    src="https://www.youtube.com/embed/9Rr3sAR_D-I?si=jvwyVlks6peQHdZk"
+                    title="Bhangra performance"
+                    loading="lazy"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share;
+                    "
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="video-frame">
+                  <iframe
+                    src="https://www.youtube.com/embed/XCK6X_I9L5A?si=hA89aPyA4-DiY2M6"
+                    title="Bhangra performance"
+                    loading="lazy"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share;
+                    "
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="video-frame">
+                  <iframe
+                    src="https://www.youtube.com/embed/Ji16Qnp2B6Y?si=F_4XDGBQyl_5kdyc"
+                    title="Bhangra performance"
+                    loading="lazy"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share;
+                    "
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="video-frame">
+                  <iframe
+                    src="https://www.youtube.com/embed/byLRhuTs4tw?si=Lti3qA--TqLQuh8I"
+                    title="Bhangra performance"
+                    loading="lazy"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share;
+                    "
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="video-frame">
+                  <iframe
+                    src="https://www.youtube.com/embed/txShFvCkDUs?si=4Yl8t7nX4JFnuFDH"
+                    title="Bhangra performance"
+                    loading="lazy"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share;
+                    "
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="video-frame">
+                  <iframe
+                    src="https://www.youtube.com/embed/e5WOUGU7iWo?si=gaD5gHUUR1kk1uIX"
+                    title="Bhangra performance"
+                    loading="lazy"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share;
+                    "
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <div class="video-frame">
+                  <iframe
+                    src="https://www.youtube.com/embed/hj3eW48Pnn4?si=btvzaW1pynICvp7o"
+                    title="Bhangra performance"
+                    loading="lazy"
+                    allow="
+                      accelerometer;
+                      autoplay;
+                      clipboard-write;
+                      encrypted-media;
+                      gyroscope;
+                      picture-in-picture;
+                      web-share;
+                    "
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+            <div class="hobby-reveal">
+              <div class="mixing-content" id="mixing-content">
+                <iframe
+                  class="sc-embed sc-embed-track"
+                  width="100%"
+                  height="120"
+                  scrolling="no"
+                  frameborder="no"
+                  loading="lazy"
+                  allow="autoplay"
+                  title="WB VCS BB 2026"
+                  src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/sungat-sss/wb-vcs-bb-2026&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"
+                ></iframe>
+              </div>
+            </div>
           </div>
         </div>
       </section>
       <section id="projects">
         <h2>Projects</h2>
         <div class="project-list">
-          <div class="project-card">
+          <a
+            class="project-card"
+            href="https://github.com/sungatshienh/cv"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <div class="project-icon-box">
               <img
                 src="./images/CV-logo.png"
@@ -177,7 +359,8 @@
               <p>Real-time object detection and identification.</p>
             </div>
             <span class="project-arrow" aria-hidden="true">&#8599;</span>
-          </div>
+          </a>
+          <hr class="divider" />
           <a
             class="project-card"
             href="https://sungatshienh.github.io/WAVy/"
